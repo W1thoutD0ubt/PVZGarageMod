@@ -75,6 +75,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoardEvents.cppm" />
     <ClCompile Include="Index.cppm" />
   </ItemGroup>
   <ItemGroup>
