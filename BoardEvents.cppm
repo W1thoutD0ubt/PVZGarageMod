@@ -1,7 +1,19 @@
 export module BoardEvents;
 
+#include "pvzclass/pvzclass/Memory.hpp"
+
 import Index;
 import <utility>;
+
+class MyBoard : public PVZ::Board
+{
+public:
+	MyBoard(uint32_t address) : PVZ::Board(address) {};
+	MyBoard(const PVZ::Board& board) : PVZ::Board(board.GetBaseAddress()) {};
+
+	/// @brief 对局是否正在进行
+	T_SIMPLE_PROPERTY(uint8_t, MatchRunning, 0x55EA);
+};
 
 class BoardPickBackgroundAfterEvent : public DLLEventTemplate<0x40A7F1, 5, REG_EDX>
 {
@@ -13,14 +25,16 @@ public:
 
 PVZ::PVZString prop_name;
 
-void InitBackground(PVZ::Board board)
+void InitBackground(MyBoard board)
 {
 	auto app = board.GetPVZApp();
 
 	if (!prop_name.isValid())
 		prop_name = PVZ::PVZString::Make("Enabled");
 
-	if (app.GetBoolean(prop_name, false))
+	board.MatchRunning = app.GetBoolean(prop_name, false);
+
+	if (board.MatchRunning)
 	{
 		auto lawn = board.GetLawn();
 		lawn.SetRouteType(0, RouteType::NoZombie);
