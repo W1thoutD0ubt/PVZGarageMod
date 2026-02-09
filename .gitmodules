@@ -1,0 +1,4 @@
+[submodule "include/pvzclass"]
+	path = include/pvzclass
+	url = https://github.com/PVZClassAcademy/pvzclass
+	shallow = true

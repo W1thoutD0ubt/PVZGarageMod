@@ -1,3 +1,4 @@
 export module Index;
 
-export inline int test = 0;
+export import "pvzclass/pvzclass/pvzclass.h";
+export import "pvzclass/pvzclass/pvzevent.hpp";

@@ -1,5 +1,8 @@
 import Index;
 
+#define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
+#define NOMINMAX
 #include <Windows.h>
 
 bool APIENTRY DllMain( HMODULE hModule,
