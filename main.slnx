@@ -2,5 +2,6 @@
   <Configurations>
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="include/pvzclass/pvzclass/pvzclass.vcxproj" Id="703410a4-a7e7-4fff-a8d0-c7b8b5329575" />
   <Project Path="main.vcxproj" Id="dda527d8-6d58-48a4-a7e4-3979fa11aa63" />
 </Solution>
