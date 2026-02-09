@@ -24,5 +24,8 @@
     <ClCompile Include="BoardEvents.cppm">
       <Filter>模块文件</Filter>
     </ClCompile>
+    <ClCompile Include="MyBoard.cppm">
+      <Filter>模块文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
