@@ -20,4 +20,5 @@ export void InitResource()
 
 	manager.ParseResourcesFile("garage/garage_resoures.xml");
 	ExtractResourceEvent((int)onExtractResource);
+	manager.TodLoadResources("InitGarage");
 }
