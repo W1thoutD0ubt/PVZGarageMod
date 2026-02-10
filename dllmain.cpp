@@ -8,6 +8,22 @@ import BoardEvents;
 import GarageResources;
 import Drawing;
 
+extern "C"
+{
+	__declspec(dllexport) void init()
+	{
+		PVZ::InitPVZDLL();
+		PVZ::GetPVZApp().LoadProperties(PVZ::PVZString::Make("garage/settings.xml"));
+		PVZ::Memory::WriteMemory<int>(0x651200, 666);
+		if (PVZ::GetPVZApp().GetBoolean(PVZ::PVZString::Make("Enabled"), true))
+		{
+			InitResource();
+			InitBoardEvents();
+			InitDrawing();
+		}
+	}
+}
+
 bool APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -16,14 +32,6 @@ bool APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-		PVZ::InitPVZDLL();
-		PVZ::GetPVZApp().LoadProperties(PVZ::PVZString::Make("garage/settings.xml"));
-		if (PVZ::GetPVZApp().GetBoolean(PVZ::PVZString::Make("Enabled"), false))
-		{
-			InitResource();
-			InitBoardEvents();
-			InitDrawing();
-		}
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
