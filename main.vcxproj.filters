@@ -27,5 +27,8 @@
     <ClCompile Include="MyBoard.cppm">
       <Filter>模块文件</Filter>
     </ClCompile>
+    <ClCompile Include="GarageResources.cppm">
+      <Filter>模块文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

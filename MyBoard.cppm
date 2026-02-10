@@ -10,6 +10,6 @@ public:
 	MyBoard(uint32_t address) : PVZ::Board(address) {};
 	MyBoard(const PVZ::Board& board) : PVZ::Board(board.GetBaseAddress()) {};
 
-	/// @brief 对局是否正在进行
+	/// @brief 是否启用车库特性
 	T_SIMPLE_PROPERTY(uint8_t, garageEnabled, 0x55EA);
 };
