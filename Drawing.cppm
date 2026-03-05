@@ -6,7 +6,7 @@ import GarageResources;
 
 void onDrawUITop(MyBoard board, PVZ::Graphics g)
 {
-	g.DrawImage(IMAGE_GARAGE_DOOR, 0, 0);
+	g.TodDrawImageScaledF(IMAGE_GARAGE_DOOR, -76, 25, 1, 1);
 }
 
 export void InitDrawing()

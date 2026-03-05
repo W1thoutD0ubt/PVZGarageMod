@@ -14,7 +14,7 @@ extern "C"
 	{
 		PVZ::InitPVZDLL();
 		PVZ::GetPVZApp().LoadProperties(PVZ::PVZString::Make("garage/settings.xml"));
-		PVZ::Memory::WriteMemory<int>(0x651200, 666);
+		//PVZ::Memory::WriteMemory<int>(0x651200, 666);
 		if (PVZ::GetPVZApp().GetBoolean(PVZ::PVZString::Make("Enabled"), true))
 		{
 			InitResource();
