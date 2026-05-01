@@ -19,11 +19,11 @@ void InitBackground(MyBoard board)
 	auto app = board.GetPVZApp();
 
 	if (!prop_name.isValid())
-		prop_name = PVZ::PVZString::Make("Enabled");
+		prop_name = PVZ::PVZString::Make("Episode1Enabled");
 
-	board.garageEnabled = app.GetBoolean(prop_name, false);
+	board.garageEpisode1Enabled = app.GetBoolean(prop_name, false);
 
-	if (board.garageEnabled)
+	if (board.garageEpisode1Enabled)
 	{
 		auto lawn = board.GetLawn();
 		lawn.SetRouteType(0, RouteType::NoZombie);
