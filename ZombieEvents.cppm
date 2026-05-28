@@ -76,6 +76,14 @@ public:
 	ZombieIsBackwardEvent(int address) : ThreeStateEventTemplate() { Init(address); };
 };
 
+/// @param 触发事件的 Board，判定的行，僵尸类型
+class IsRowCanHaveZombieTypeEvent : public ThreeStateEventTemplate<0x40DB21, 7, 0x40DB4E, 0x40DC41, 0x2C, 0x2C, REG_ESI>
+{
+public:
+	IsRowCanHaveZombieTypeEvent(const char* str) : ThreeStateEventTemplate() { Init(str); };
+	IsRowCanHaveZombieTypeEvent(int address) : ThreeStateEventTemplate() { Init(address); };
+};
+
 inline constexpr auto Yvelocity = 0.05f;
 
 float GetZombieWalkDist(PVZ::Zombie zombie, float dist)
@@ -170,6 +178,22 @@ int onZombieIsBackward(PVZ::Zombie zombie)
 	return ThreeState::None;
 }
 
+int IsRowCanHaveZombieType(PVZ::Board board, int row, ZombieType::ZombieType type)
+{
+	if (type == ZombieType::CatapultZombie)
+	{
+		if (row > 1)
+		{
+			auto lawn = board.GetLawn();
+			if (lawn.GetRouteType(row) == RouteType::Land
+					&& lawn.GetRouteType(row - 1) == RouteType::Land)
+				return ThreeState::None;
+		}
+		return ThreeState::Disable;
+	}
+	return ThreeState::None;
+}
+
 export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
@@ -181,4 +205,5 @@ export void InitZombieEvents()
 	ZombieTakeDmgEvent((int)onZombieTakeDamage);
 	ZombieNotWalkingEvent((int)onZombieNotWalking);
 	ZombieIsBackwardEvent((int)onZombieIsBackward);
+	IsRowCanHaveZombieTypeEvent((int)IsRowCanHaveZombieType);
 }
