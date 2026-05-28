@@ -123,9 +123,11 @@ bool onZombieUpdateAbility(PVZ::Zombie zombie)
 			{
 				zombie.State = ZombieState::BACK_CAR_RETREAT;
 				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
-				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
-				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
-				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
+				auto creep = Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
+				creep.X += 15;
+				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row, 9);
+				creep = Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row, 9);
+				creep.X += 15;
 			}
 			break;
 		}
