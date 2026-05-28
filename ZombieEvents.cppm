@@ -194,6 +194,22 @@ int IsRowCanHaveZombieType(PVZ::Board board, int row, ZombieType::ZombieType typ
 	return ThreeState::None;
 }
 
+int onPlantFindTargetRT(PVZ::Plant plant, PVZ::Zombie zombie, int targetRow)
+{
+	if (zombie.Type == ZombieType::CatapultZombie && targetRow - zombie.Row == -1)
+		return ThreeState::Enable;
+
+	return ThreeState::None;
+}
+
+int onSquashFindTargetRT(PVZ::Plant plant, PVZ::Zombie zombie)
+{
+	if (zombie.Type == ZombieType::CatapultZombie && plant.Row - zombie.Row == -1)
+		return ThreeState::Enable;
+
+	return ThreeState::None;
+}
+
 export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
@@ -206,4 +222,6 @@ export void InitZombieEvents()
 	ZombieNotWalkingEvent((int)onZombieNotWalking);
 	ZombieIsBackwardEvent((int)onZombieIsBackward);
 	IsRowCanHaveZombieTypeEvent((int)IsRowCanHaveZombieType);
+	PVZEvent::PlantFindTargetRTEvent_ts((int)onPlantFindTargetRT);
+	PVZEvent::SquashFindTargetRTEvent_ts((int)onSquashFindTargetRT);
 }
