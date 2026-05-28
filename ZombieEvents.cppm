@@ -84,6 +84,15 @@ public:
 	IsRowCanHaveZombieTypeEvent(int address) : ThreeStateEventTemplate() { Init(address); };
 };
 
+/// @param 触发事件的子弹，子弹判定的僵尸
+/// @return 若为负数，则按原版处理；若为 0，则为不可选中；若为正数，则为强制可选。
+class ProjectileFindTargetRTEvent_ts : public ThreeStateEventTemplate<0x46CD95, 6, 0x46CDAD, 0x46CE58, REG_ESI, REG_EDI>
+{
+public:
+	ProjectileFindTargetRTEvent_ts(const char* str) : ThreeStateEventTemplate() { Init(str); };
+	ProjectileFindTargetRTEvent_ts(int address) : ThreeStateEventTemplate() { Init(address); };
+};
+
 inline constexpr auto Yvelocity = 0.05f;
 
 float GetZombieWalkDist(PVZ::Zombie zombie, float dist)
@@ -212,6 +221,14 @@ int onSquashFindTargetRT(PVZ::Plant plant, PVZ::Zombie zombie)
 	return ThreeState::None;
 }
 
+int onProjectileFindTargetRT(PVZ::Projectile projectile, PVZ::Zombie zombie)
+{
+	if (zombie.Type == ZombieType::CatapultZombie && projectile.Row - zombie.Row == -1)
+		return ThreeState::Enable;
+
+	return ThreeState::None;
+}
+
 export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
@@ -226,4 +243,5 @@ export void InitZombieEvents()
 	IsRowCanHaveZombieTypeEvent((int)IsRowCanHaveZombieType);
 	PVZEvent::PlantFindTargetRTEvent_ts((int)onPlantFindTargetRT);
 	PVZEvent::SquashFindTargetRTEvent_ts((int)onSquashFindTargetRT);
+	ProjectileFindTargetRTEvent_ts((int)onProjectileFindTargetRT);
 }
