@@ -60,6 +60,22 @@ public:
 	ZombieCatapultDeathEvent(int address) : DLLEventTemplate() { Init(address); };
 };
 
+/// @param 触发事件的 Zombie
+class ZombieNotWalkingEvent : public ThreeStateEventTemplate<0x52A611, 6, 0x52A7A4, 0x52A79A, REG_EAX>
+{
+public:
+	ZombieNotWalkingEvent(const char* str) : ThreeStateEventTemplate() { Init(str); };
+	ZombieNotWalkingEvent(int address) : ThreeStateEventTemplate() { Init(address); };
+};
+
+/// @param 触发事件的 Zombie
+class ZombieIsBackwardEvent : public ThreeStateEventTemplate<0x52BEE0, 7, 0x52BEE9, 0x52BF5A, REG_ECX>
+{
+public:
+	ZombieIsBackwardEvent(const char* str) : ThreeStateEventTemplate() { Init(str); };
+	ZombieIsBackwardEvent(int address) : ThreeStateEventTemplate() { Init(address); };
+};
+
 inline constexpr auto Yvelocity = 0.05f;
 
 float GetZombieWalkDist(PVZ::Zombie zombie, float dist)
@@ -138,6 +154,22 @@ int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)
 	return damage;
 }
 
+int onZombieNotWalking(PVZ::Zombie zombie)
+{
+	if (zombie.State == ZombieState::BACK_CAR_SUMMON)
+		return ThreeState::Enable;
+
+	return ThreeState::None;
+}
+
+int onZombieIsBackward(PVZ::Zombie zombie)
+{
+	if (zombie.State == ZombieState::BACK_CAR_RETREAT)
+		return ThreeState::Enable;
+
+	return ThreeState::None;
+}
+
 export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
@@ -147,4 +179,6 @@ export void InitZombieEvents()
 	ZombieUpdateAbilityEvent((int)onZombieUpdateAbility);
 	ZombieCatapultDeathEvent((int)onCatapultDeath);
 	ZombieTakeDmgEvent((int)onZombieTakeDamage);
+	ZombieNotWalkingEvent((int)onZombieNotWalking);
+	ZombieIsBackwardEvent((int)onZombieIsBackward);
 }
