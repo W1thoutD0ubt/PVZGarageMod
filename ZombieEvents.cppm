@@ -135,6 +135,15 @@ void onCatapultDeath(PVZ::Zombie zombie, PVZ::DamageFlags flags)
 	}
 }
 
+int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)
+{
+	if (zombie.Type == ZombieType::CatapultZombie
+			&& zombie.State == ZombieState::BACK_CAR_RETREAT)
+		return 0;
+
+	return damage;
+}
+
 export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
@@ -143,4 +152,5 @@ export void InitZombieEvents()
 	ZombieWalkEvent((int)GetZombieWalkDist);
 	ZombieUpdateAbilityEvent((int)onZombieUpdateAbility);
 	ZombieCatapultDeathEvent((int)onCatapultDeath);
+	ZombieTakeDmgEvent((int)onZombieTakeDamage);
 }
