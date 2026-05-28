@@ -76,6 +76,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoardEvents.cppm" />
+    <ClCompile Include="Const.cppm" />
     <ClCompile Include="Drawing.cppm" />
     <ClCompile Include="GarageResources.cppm" />
     <ClCompile Include="Index.cppm" />

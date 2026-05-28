@@ -4,15 +4,9 @@ export module ZombieEvents;
 
 import Index;
 import MyBoard;
+import Const;
 import <cmath>;
 import <utility>;
-
-namespace ZombieState
-{
-	using Type2 = ZombieState;
-	inline constexpr Type2 BACK_CAR_SUMMON = (Type2)65536;
-	inline constexpr Type2 BACK_CAR_RETREAT = (Type2)65537;
-}
 
 class ZombieWalkEvent : public FloatDLLEventTemplate<0x52AB18, 5, 0x28, false, 0x28, REG_ESI>
 {
