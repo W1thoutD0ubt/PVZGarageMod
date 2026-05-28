@@ -80,6 +80,7 @@
     <ClCompile Include="GarageResources.cppm" />
     <ClCompile Include="Index.cppm" />
     <ClCompile Include="MyBoard.cppm" />
+    <ClCompile Include="ZombieEvents.cppm" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

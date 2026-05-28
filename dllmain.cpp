@@ -7,6 +7,7 @@ import Index;
 import BoardEvents;
 import GarageResources;
 import Drawing;
+import ZombieEvents;
 
 extern "C"
 {
@@ -20,6 +21,7 @@ extern "C"
 			InitResource();
 			InitBoardEvents();
 			InitDrawing();
+			InitZombieEvents();
 		}
 	}
 }
@@ -32,6 +34,7 @@ bool APIENTRY DllMain( HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
+		PVZ::Plant::MemSize = 0x16C;
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:

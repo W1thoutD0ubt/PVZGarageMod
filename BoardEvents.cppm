@@ -12,7 +12,7 @@ public:
 	BoardPickBackgroundAfterEvent() : DLLEventTemplate() { Init("onBoardPickBackgroundAfter"); };
 };
 
-PVZ::PVZString prop_name;
+PVZ::PVZString prop_name, prop2_name;
 
 void InitBackground(MyBoard board)
 {
@@ -20,8 +20,11 @@ void InitBackground(MyBoard board)
 
 	if (!prop_name.isValid())
 		prop_name = PVZ::PVZString::Make("Episode1Enabled");
+	if (!prop2_name.isValid())
+		prop2_name = PVZ::PVZString::Make("Episode2Enabled");
 
 	board.garageEpisode1Enabled = app.GetBoolean(prop_name, false);
+	board.garageEpisode2Enabled = app.GetBoolean(prop2_name, false);
 
 	if (board.garageEpisode1Enabled)
 	{

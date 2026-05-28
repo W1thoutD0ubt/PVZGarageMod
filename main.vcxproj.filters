@@ -33,5 +33,8 @@
     <ClCompile Include="Drawing.cppm">
       <Filter>模块文件</Filter>
     </ClCompile>
+    <ClCompile Include="ZombieEvents.cppm">
+      <Filter>模块文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
