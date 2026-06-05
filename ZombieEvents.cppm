@@ -4,6 +4,7 @@ export module ZombieEvents;
 
 import Index;
 import MyBoard;
+import MyZombie;
 import Const;
 import <cmath>;
 import <utility>;
@@ -105,7 +106,7 @@ PVZ::PVZString wait_countdown, unbox_countdown;
 char idle1_anim_name[] = "anim_idle1";
 char idle2_anim_name[] = "anim_idle2";
 char retreat_anim_name[] = "anim_retreat";
-bool onZombieUpdateAbility(PVZ::Zombie zombie)
+bool onZombieUpdateAbility(MyZombie zombie)
 {
 	if (zombie.Type == ZombieType::CatapultZombie)
 	{
@@ -155,7 +156,7 @@ bool onZombieUpdateAbility(PVZ::Zombie zombie)
 		return true;
 }
 
-void onCatapultDeath(PVZ::Zombie zombie, PVZ::DamageFlags flags)
+void onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 {
 	if (flags & 0x20)
 		return;

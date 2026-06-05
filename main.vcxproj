@@ -81,6 +81,7 @@
     <ClCompile Include="GarageResources.cppm" />
     <ClCompile Include="Index.cppm" />
     <ClCompile Include="MyBoard.cppm" />
+    <ClCompile Include="MyZombie.cppm" />
     <ClCompile Include="ZombieEvents.cppm" />
   </ItemGroup>
   <ItemGroup>
