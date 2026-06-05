@@ -165,8 +165,6 @@ bool onZombieUpdateAbility(MyZombie zombie)
 			}
 			if (zombie.AttributeCountdown == 1)
 			{
-				proj.Remove();
-
 				PVZ::Rect blast_range = PVZ::Rect(proj.ImageX - 60, zombie.ImageY, 200, 80);
 				for (auto plant : zombie.GetBoard().GetAllPlants())
 				{
@@ -177,7 +175,14 @@ bool onZombieUpdateAbility(MyZombie zombie)
 					if (PVZ::GetXOverlap(rect, blast_range) > 0)
 						plant.Remove();
 				}
+
+				PVZ::CreateParticleSystem(proj.X, proj.Y, 400000, EffectType::JACK_BOX_EXPLODED);
+				zombie.GetBoard().Earthquake(4, -6, 12);
+				proj.Remove();
+
+				PVZ::CreateParticleSystem(zombie.X + 80.0f, zombie.Y + 60.0f, zombie.Layer + 1, EffectType::ZOMBIE_BASKBALL_EXPLODED);
 				zombie.RemoveWithLoot();
+				zombie.GetLawnApp().PlayFoley(PVZEnum::FOLEY_EXPLOSION);
 			}
 			break;
 		}
@@ -201,7 +206,7 @@ bool onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 	zombie.State = ZombieState::BACK_CAR_DYING;
 	zombie.AttributeCountdown = 0;
 	zombie.BodyHealth = zombie.BodyMaxHealth;
-	zombie.PlayZombieReanimation(DWORD("anim_bounce"), PVZEnum::REANIM_PLAY_ONCE, 2, 12.0f);
+	zombie.PlayZombieReanimation(DWORD("anim_bounce"), PVZEnum::REANIM_PLAY_ONCE_AND_HOLD, 2, 12.0f);
 
 	return false;
 }
