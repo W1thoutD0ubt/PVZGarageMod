@@ -111,7 +111,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 	if (zombie.Type == ZombieType::CatapultZombie)
 	{
 		auto board = MyBoard(zombie.GetBoard());
-		if (!board.garageEpisode2Enabled)
+		if (!board.garageEpisode1Enabled)
 			return true;
 
 		switch (zombie.State)
@@ -157,11 +157,10 @@ bool onZombieUpdateAbility(MyZombie zombie)
 			auto proj = PVZ::GetByID<PVZ::Projectile>(zombie.BasketballID);
 			if (!proj.NotExist)
 			{
-				if (proj.X < 520 && proj.Motion != MotionType::None)
+				if (proj.X < 520 && proj.XSpeed != 0)
 				{
 					proj.XSpeed = 0;
-					proj.Motion = MotionType::None;
-					zombie.AttributeCountdown = 101;
+					zombie.AttributeCountdown = 151;
 				}
 			}
 			if (zombie.AttributeCountdown == 1)
@@ -197,9 +196,11 @@ bool onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 	basketball.DamageAbility = 0;
 	basketball.XSpeed = -3.33f;
 	basketball.Motion = MotionType::Float;
+	basketball.RotationSpeed = 0;
 	zombie.BasketballID = basketball.Id;
 	zombie.State = ZombieState::BACK_CAR_DYING;
 	zombie.AttributeCountdown = 0;
+	zombie.BodyHealth = zombie.BodyMaxHealth;
 	zombie.PlayZombieReanimation(DWORD("anim_bounce"), PVZEnum::REANIM_PLAY_ONCE, 2, 12.0f);
 
 	return false;
@@ -208,7 +209,7 @@ bool onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)
 {
 	if (zombie.Type == ZombieType::CatapultZombie
-			&& (zombie.State == ZombieState::BACK_CAR_RETREAT || zombie.State == ZombieState::BACK_CAR_DYING)
+			&& (zombie.State == ZombieState::BACK_CAR_RETREAT || zombie.State == ZombieState::BACK_CAR_DYING))
 		return 0;
 
 	return damage;
