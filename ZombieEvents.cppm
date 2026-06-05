@@ -68,14 +68,6 @@ public:
 	ZombieNotWalkingEvent(int address) : ThreeStateEventTemplate() { Init(address); };
 };
 
-/// @param 触发事件的 Zombie
-class ZombieIsBackwardEvent : public ThreeStateEventTemplate<0x52BEE0, 7, 0x52BEE9, 0x52BF5A, REG_ECX>
-{
-public:
-	ZombieIsBackwardEvent(const char* str) : ThreeStateEventTemplate() { Init(str); };
-	ZombieIsBackwardEvent(int address) : ThreeStateEventTemplate() { Init(address); };
-};
-
 /// @param 触发事件的 Board，判定的行，僵尸类型
 class IsRowCanHaveZombieTypeEvent : public ThreeStateEventTemplate<0x40DB21, 7, 0x40DB4E, 0x40DC41, 0x2C, 0x2C, REG_ESI>
 {
@@ -175,15 +167,7 @@ int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)
 
 int onZombieNotWalking(PVZ::Zombie zombie)
 {
-	if (zombie.State == ZombieState::BACK_CAR_SUMMON)
-		return ThreeState::Enable;
-
-	return ThreeState::None;
-}
-
-int onZombieIsBackward(PVZ::Zombie zombie)
-{
-	if (zombie.State == ZombieState::BACK_CAR_RETREAT)
+	if (zombie.State == ZombieState::BACK_CAR_SUMMON || (zombie.State == ZombieState::BACK_CAR_RETREAT && zombie.Speed > 0))
 		return ThreeState::Enable;
 
 	return ThreeState::None;
@@ -239,7 +223,6 @@ export void InitZombieEvents()
 	ZombieCatapultDeathEvent((int)onCatapultDeath);
 	ZombieTakeDmgEvent((int)onZombieTakeDamage);
 	ZombieNotWalkingEvent((int)onZombieNotWalking);
-	ZombieIsBackwardEvent((int)onZombieIsBackward);
 	IsRowCanHaveZombieTypeEvent((int)IsRowCanHaveZombieType);
 	PVZEvent::PlantFindTargetRTEvent_ts((int)onPlantFindTargetRT);
 	PVZEvent::SquashFindTargetRTEvent_ts((int)onSquashFindTargetRT);
