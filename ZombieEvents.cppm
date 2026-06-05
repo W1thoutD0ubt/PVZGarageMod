@@ -54,11 +54,11 @@ protected:
 	}
 };
 
-class ZombieCatapultDeathEvent : public DLLEventTemplate<0x52EC00, 6, 0x24, REG_EAX>
+class ZombieCatapultDeathEvent : public BoolDLLEventTemplate<0x52EC00, 6, 0x52ED9E, 0x24, REG_EAX>
 {
 public:
-	ZombieCatapultDeathEvent(const char* str) : DLLEventTemplate() { Init(str); };
-	ZombieCatapultDeathEvent(int address) : DLLEventTemplate() { Init(address); };
+	ZombieCatapultDeathEvent(const char* str) : BoolDLLEventTemplate() { Init(str); };
+	ZombieCatapultDeathEvent(int address) : BoolDLLEventTemplate() { Init(address); };
 };
 
 /// @param 触发事件的 Zombie
@@ -153,7 +153,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 				zombie.SetSpeed(-zombie.Speed);
 			}
 			break;
-		case ZombieState::BASKETBALL_LAUNCHED:
+		case ZombieState::BACK_CAR_DYING:
 			auto proj = PVZ::GetByID<PVZ::Projectile>(zombie.BasketballID);
 			if (!proj.NotExist)
 			{
@@ -188,25 +188,27 @@ bool onZombieUpdateAbility(MyZombie zombie)
 		return true;
 }
 
-void onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
+bool onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 {
 	if (flags & 0x20)
-		return;
+		return true;
 
 	auto basketball = Creator::CreateProjectile(ProjectileType::Basketball, zombie.Row, zombie.ImageX);
 	basketball.DamageAbility = 0;
 	basketball.XSpeed = -3.33f;
 	basketball.Motion = MotionType::Float;
 	zombie.BasketballID = basketball.Id;
-	zombie.State = ZombieState::BASKETBALL_LAUNCHED;
+	zombie.State = ZombieState::BACK_CAR_DYING;
 	zombie.AttributeCountdown = 0;
 	zombie.PlayZombieReanimation(DWORD("anim_bounce"), PVZEnum::REANIM_PLAY_ONCE, 2, 12.0f);
+
+	return false;
 }
 
 int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)
 {
 	if (zombie.Type == ZombieType::CatapultZombie
-			&& zombie.State == ZombieState::BACK_CAR_RETREAT)
+			&& (zombie.State == ZombieState::BACK_CAR_RETREAT || zombie.State == ZombieState::BACK_CAR_DYING)
 		return 0;
 
 	return damage;
