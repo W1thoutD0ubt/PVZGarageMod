@@ -102,6 +102,9 @@ float GetZombieWalkDist(PVZ::Zombie zombie, float dist)
 }
 
 PVZ::PVZString wait_countdown, unbox_countdown;
+char idle1_anim_name[] = "anim_idle1";
+char idle2_anim_name[] = "anim_idle2";
+char retreat_anim_name[] = "anim_retreat";
 bool onZombieUpdateAbility(PVZ::Zombie zombie)
 {
 	if (zombie.Type == ZombieType::CatapultZombie)
@@ -116,19 +119,33 @@ bool onZombieUpdateAbility(PVZ::Zombie zombie)
 			if (zombie.X <= 730)
 			{
 				zombie.State = ZombieState::BACK_CAR_SUMMON;
+				zombie.PlayZombieReanimation(0x6580D4, PVZEnum::REANIM_LOOP, 10, 12.0f); // anim_idle
 				zombie.AttributeCountdown = zombie.GetLawnApp().GetInteger(wait_countdown, 0);
 			}
 			break;
 		case ZombieState::BACK_CAR_SUMMON:
 			if (zombie.AttributeCountdown < zombie.GetLawnApp().GetInteger(unbox_countdown, 0))
 			{
+				zombie.PlayZombieReanimation(DWORD(idle1_anim_name), PVZEnum::REANIM_LOOP, 5, 12.0f); // anim_idle
+			}
+			if (zombie.AttributeCountdown <= 0)
+			{
 				zombie.State = ZombieState::BACK_CAR_RETREAT;
+				zombie.PlayZombieReanimation(DWORD(idle2_anim_name), PVZEnum::REANIM_PLAY_ONCE_AND_HOLD, 10, 12.0f);
+
 				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
 				auto creep = Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
 				creep.X += 15;
 				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row, 9);
 				creep = Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row, 9);
 				creep.X += 15;
+			}
+			break;
+		case ZombieState::BACK_CAR_RETREAT:
+			if (zombie.GetAnimation().CycleCount >= 1 && zombie.Speed > 0)
+			{
+				zombie.PlayZombieReanimation(DWORD(retreat_anim_name), PVZEnum::REANIM_LOOP, 10, 12.0f);
+				zombie.SetSpeed(-zombie.Speed);
 			}
 			break;
 		}
