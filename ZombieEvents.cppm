@@ -134,12 +134,16 @@ bool onZombieUpdateAbility(MyZombie zombie)
 				zombie.State = ZombieState::BACK_CAR_RETREAT;
 				zombie.PlayZombieReanimation(DWORD(idle2_anim_name), PVZEnum::REANIM_PLAY_ONCE_AND_HOLD, 10, 12.0f);
 
-				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
-				auto creep = Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row - 1, 9);
-				creep.X += 15;
-				Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row, 9);
-				creep = Creator::CreateZombie(ZombieType::PogoZombie, zombie.Row, 9);
-				creep.X += 15;
+				auto spawn_pogo = [&](int row, float x_offset) {
+					auto creep = Creator::CreateZombie(ZombieType::PogoZombie, row, 9);
+					creep.X += x_offset;
+					creep.Layer += 5;
+				};
+
+				spawn_pogo(zombie.Row - 1, 0);
+				spawn_pogo(zombie.Row - 1, 15);
+				spawn_pogo(zombie.Row, 0);
+				spawn_pogo(zombie.Row, 15);
 			}
 			break;
 		case ZombieState::BACK_CAR_RETREAT:
