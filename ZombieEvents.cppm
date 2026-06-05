@@ -149,6 +149,34 @@ bool onZombieUpdateAbility(MyZombie zombie)
 				zombie.SetSpeed(-zombie.Speed);
 			}
 			break;
+		case ZombieState::BASKETBALL_LAUNCHED:
+			auto proj = PVZ::GetByID<PVZ::Projectile>(zombie.BasketballID);
+			if (!proj.NotExist)
+			{
+				if (proj.X < 520 && proj.Motion != MotionType::None)
+				{
+					proj.XSpeed = 0;
+					proj.Motion = MotionType::None;
+					zombie.AttributeCountdown = 101;
+				}
+			}
+			if (zombie.AttributeCountdown == 1)
+			{
+				proj.Remove();
+
+				PVZ::Rect blast_range = PVZ::Rect(proj.ImageX - 70, zombie.ImageY, 220, 80);
+				for (auto plant : zombie.GetBoard().GetAllPlants())
+				{
+					if (plant.Row != zombie.Row)
+						continue;
+
+					auto rect = plant.GetPlantRect();
+					if (PVZ::GetXOverlap(rect, blast_range) > 0)
+						plant.Remove();
+				}
+				zombie.RemoveWithLoot();
+			}
+			break;
 		}
 		return false;
 	}
@@ -161,17 +189,14 @@ void onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 	if (flags & 0x20)
 		return;
 
-	PVZ::Rect blast_range = PVZ::Rect(zombie.ImageX - 240, zombie.ImageY, 240, 80);
-
-	for (auto plant : zombie.GetBoard().GetAllPlants())
-	{
-		if (plant.Row != zombie.Row)
-			continue;
-
-		auto rect = plant.GetPlantRect();
-		if (PVZ::GetXOverlap(rect, blast_range) > 0)
-			plant.Remove();
-	}
+	auto basketball = Creator::CreateProjectile(ProjectileType::Basketball, zombie.Row, zombie.ImageX);
+	basketball.DamageAbility = 0;
+	basketball.XSpeed = -3.33f;
+	basketball.Motion = MotionType::Float;
+	zombie.BasketballID = basketball.Id;
+	zombie.State = ZombieState::BASKETBALL_LAUNCHED;
+	zombie.AttributeCountdown = 0;
+	zombie.PlayZombieReanimation(DWORD("anim_bounce"), PVZEnum::REANIM_PLAY_ONCE, 2, 12.0f);
 }
 
 int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)

@@ -7,4 +7,5 @@ export namespace ZombieState
 	using Type2 = ZombieState;
 	inline constexpr Type2 BACK_CAR_SUMMON = (Type2)65536;
 	inline constexpr Type2 BACK_CAR_RETREAT = (Type2)65537;
+	inline constexpr Type2 BASKETBALL_LAUNCHED = (Type2)65538;
 }
