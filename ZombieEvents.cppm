@@ -102,7 +102,7 @@ float GetZombieWalkDist(PVZ::Zombie zombie, float dist)
 	return dist;
 }
 
-PVZ::PVZString wait_countdown, unbox_countdown;
+PVZ::PVZString wait_countdown, unbox_countdown, basketball_countdown;
 char idle1_anim_name[] = "anim_idle1";
 char idle2_anim_name[] = "anim_idle2";
 char retreat_anim_name[] = "anim_retreat";
@@ -160,7 +160,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 				if (proj.X < 520 && proj.XSpeed != 0)
 				{
 					proj.XSpeed = 0;
-					zombie.AttributeCountdown = 151;
+					zombie.AttributeCountdown = zombie.GetLawnApp().GetInteger(basketball_countdown, 151);
 				}
 			}
 			if (zombie.AttributeCountdown == 1)
@@ -267,6 +267,7 @@ export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
 	unbox_countdown = PVZ::PVZString::Make("BackCarUnboxCountdown");
+	basketball_countdown = PVZ::PVZString::Make("BackCarExplodeCountdown");
 
 	ZombieWalkEvent((int)GetZombieWalkDist);
 	ZombieUpdateAbilityEvent((int)onZombieUpdateAbility);
