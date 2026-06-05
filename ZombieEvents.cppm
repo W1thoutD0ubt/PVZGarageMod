@@ -167,7 +167,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 			{
 				proj.Remove();
 
-				PVZ::Rect blast_range = PVZ::Rect(proj.ImageX - 70, zombie.ImageY, 220, 80);
+				PVZ::Rect blast_range = PVZ::Rect(proj.ImageX - 60, zombie.ImageY, 200, 80);
 				for (auto plant : zombie.GetBoard().GetAllPlants())
 				{
 					if (plant.Row != zombie.Row)
