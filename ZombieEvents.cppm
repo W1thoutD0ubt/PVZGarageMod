@@ -103,8 +103,8 @@ float GetZombieWalkDist(PVZ::Zombie zombie, float dist)
 }
 
 PVZ::PVZString wait_countdown, unbox_countdown, basketball_countdown;
-char idle1_anim_name[] = "anim_idle1";
-char idle2_anim_name[] = "anim_idle2";
+char idle1_anim_name[] = "anim_idle1\0";
+char idle2_anim_name[] = "anim_idle2\0";
 char retreat_anim_name[] = "anim_retreat";
 bool onZombieUpdateAbility(MyZombie zombie)
 {
@@ -120,14 +120,15 @@ bool onZombieUpdateAbility(MyZombie zombie)
 			if (zombie.X <= 730)
 			{
 				zombie.State = ZombieState::BACK_CAR_SUMMON;
-				zombie.PlayZombieReanimation(0x6580D4, PVZEnum::REANIM_LOOP, 10, 12.0f); // anim_idle
+				zombie.PlayZombieReanimation(0x6580D4, PVZEnum::REANIM_LOOP, 1, 12.0f); // anim_idle
 				zombie.AttributeCountdown = zombie.GetLawnApp().GetInteger(wait_countdown, 0);
 			}
 			break;
 		case ZombieState::BACK_CAR_SUMMON:
 			if (zombie.AttributeCountdown == zombie.GetLawnApp().GetInteger(unbox_countdown, 0))
 			{
-				zombie.PlayZombieReanimation(DWORD(idle1_anim_name), PVZEnum::REANIM_LOOP, 5, 12.0f); // anim_idle
+				zombie.PlayZombieReanimation(DWORD(idle1_anim_name), PVZEnum::REANIM_LOOP, 5, 12.0f);
+				Creator::CreateUpperSound(PVZ::SoundID(75));
 			}
 			if (zombie.AttributeCountdown <= 0)
 			{
@@ -149,7 +150,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 		case ZombieState::BACK_CAR_RETREAT:
 			if (zombie.GetAnimation().CycleCount >= 1 && zombie.Speed > 0)
 			{
-				zombie.PlayZombieReanimation(DWORD(retreat_anim_name), PVZEnum::REANIM_LOOP, 10, 12.0f);
+				zombie.PlayZombieReanimation(0x66918C, PVZEnum::REANIM_LOOP, 10, 12.0f); // anim_walk
 				zombie.SetSpeed(-zombie.Speed);
 			}
 			break;
@@ -176,7 +177,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 						plant.Remove();
 				}
 
-				PVZ::CreateParticleSystem(proj.X, proj.Y, 400000, EffectType::JACK_BOX_EXPLODED);
+				PVZ::CreateParticleSystem(proj.X + 20.0f, proj.Y + 40.0f, 400000, EffectType::JACK_BOX_EXPLODED);
 				zombie.GetBoard().Earthquake(4, -6, 12);
 				proj.Remove();
 
