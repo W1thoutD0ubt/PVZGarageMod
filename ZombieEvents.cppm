@@ -70,7 +70,7 @@ public:
 };
 
 /// @param 触发事件的 Board，判定的行，僵尸类型
-class IsRowCanHaveZombieTypeEvent : public ThreeStateEventTemplate<0x40DB21, 7, 0x40DB4E, 0x40DC41, 0x2C, 0x2C, REG_ESI>
+class IsRowCanHaveZombieTypeEvent : public ThreeStateEventTemplate<0x40DB21, 7, 0x40DC41, 0x40DB4E, 0x2C, 0x2C, REG_ESI>
 {
 public:
 	IsRowCanHaveZombieTypeEvent(const char* str) : ThreeStateEventTemplate() { Init(str); };
