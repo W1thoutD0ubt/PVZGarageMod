@@ -268,6 +268,13 @@ int onProjectileFindTargetRT(PVZ::Projectile projectile, PVZ::Zombie zombie)
 	return ThreeState::None;
 }
 
+class SquashDamageRTEvent_ts : public ThreeStateEventTemplate<0x460739, 6, 0x460749, 0x4607B7, REG_ESI, REG_EDI>
+{
+public:
+	SquashDamageRTEvent_ts(const char* str) : ThreeStateEventTemplate() { Init(str); };
+	SquashDamageRTEvent_ts(int address) : ThreeStateEventTemplate() { Init(address); };
+};
+
 export void InitZombieEvents()
 {
 	wait_countdown = PVZ::PVZString::Make("BackCarWaitCountdown");
@@ -282,5 +289,6 @@ export void InitZombieEvents()
 	IsRowCanHaveZombieTypeEvent((int)IsRowCanHaveZombieType);
 	PVZEvent::PlantFindTargetRTEvent_ts((int)onPlantFindTargetRT);
 	PVZEvent::SquashFindTargetRTEvent_ts((int)onSquashFindTargetRT);
+	SquashDamageRTEvent_ts((int)onSquashFindTargetRT);
 	ProjectileFindTargetRTEvent_ts((int)onProjectileFindTargetRT);
 }
