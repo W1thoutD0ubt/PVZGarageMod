@@ -125,7 +125,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 			}
 			break;
 		case ZombieState::BACK_CAR_SUMMON:
-			if (zombie.AttributeCountdown < zombie.GetLawnApp().GetInteger(unbox_countdown, 0))
+			if (zombie.AttributeCountdown == zombie.GetLawnApp().GetInteger(unbox_countdown, 0))
 			{
 				zombie.PlayZombieReanimation(DWORD(idle1_anim_name), PVZEnum::REANIM_LOOP, 5, 12.0f); // anim_idle
 			}
