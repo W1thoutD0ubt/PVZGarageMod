@@ -222,7 +222,8 @@ int onZombieTakeDamage(PVZ::Zombie zombie, int& damageType, int damage)
 
 int onZombieNotWalking(PVZ::Zombie zombie)
 {
-	if (zombie.State == ZombieState::BACK_CAR_SUMMON || (zombie.State == ZombieState::BACK_CAR_RETREAT && zombie.Speed > 0))
+	if (zombie.State == ZombieState::BACK_CAR_SUMMON || zombie.State == ZombieState::BACK_CAR_DYING
+			|| (zombie.State == ZombieState::BACK_CAR_RETREAT && zombie.Speed > 0))
 		return ThreeState::Enable;
 
 	return ThreeState::None;
