@@ -150,7 +150,7 @@ bool onZombieUpdateAbility(MyZombie zombie)
 		case ZombieState::BACK_CAR_RETREAT:
 			if (zombie.GetAnimation().CycleCount >= 1 && zombie.Speed > 0)
 			{
-				zombie.PlayZombieReanimation(0x66918C, PVZEnum::REANIM_LOOP, 10, 12.0f); // anim_walk
+				zombie.PlayZombieReanimation(DWORD(retreat_anim_name), PVZEnum::REANIM_LOOP, 10, 12.0f);
 				zombie.SetSpeed(-zombie.Speed);
 			}
 			break;
