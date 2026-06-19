@@ -34,7 +34,9 @@ bool APIENTRY DllMain( HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		PVZ::Plant::MemSize = 0x16C;
+		PVZ::Plant::MemSize = 0x17C;
+		PVZ::Zombie::MemSize = 0x18C;
+		PVZ::Projectile::MemSize = 0x0B4;
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
