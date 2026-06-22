@@ -195,6 +195,9 @@ bool onZombieUpdateAbility(MyZombie zombie)
 
 bool onCatapultDeath(MyZombie zombie, PVZ::DamageFlags flags)
 {
+	MyBoard board = zombie.GetBoard();
+	if (!board.garageEpisode1Enabled)
+		return true;
 	if (flags & 0x20)
 		return true;
 
