@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>47</ID>
+      <Description>"指针拓展"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"拓展植物指针"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+define(PlantClassSize,17C)
+define(AllocPlantSize,178)
+registersymbol(PlantClassSize)
+
+651200:
+mov [ebx+000000BC],edi
+
+originalcode:
+mov [ebx+00000014c],edi
+mov [ebx+000000150],edi
+mov [ebx+000000154],edi
+mov [ebx+000000158],edi
+
+mov [ebx+00000015c],edi
+mov [ebx+000000160],edi
+mov [ebx+000000164],edi
+mov [ebx+000000168],edi
+
+mov [ebx+00000016c],edi
+mov [ebx+000000170],edi
+mov [ebx+000000174],edi
+mov [ebx+000000178],edi
+
+exit:
+jmp returnhere
+
+45DCA8:
+jmp 651200
+nop
+returnhere:
+
+
+00407CC1:
+push PlantClassSize*400
+004109F4:
+IMUL EAX,EAX,PlantClassSize
+0041BAEC:
+ADD EAX,PlantClassSize
+0041BAFD:
+IMUL ECX,ECX,PlantClassSize
+0041BB1D:
+ADD EAX,PlantClassSize
+0041C964:
+ADD EAX,PlantClassSize
+0041C96F:
+IMUL ECX,ECX,PlantClassSize
+0041C988:
+ADD EAX,PlantClassSize
+0041DE9B:
+IMUL EAX,EAX,PlantClassSize
+0041DEAD:
+IMUL EDI,EDI,PlantClassSize
+0041DF0F:
+IMUL EAX,EAX,PlantClassSize
+0041E5A8:
+ADD ECX,PlantClassSize
+0041E5B1:
+IMUL EDX,EDX,PlantClassSize
+0041E5CB:
+IMUL EDX,EDX,PlantClassSize
+0041E5D3:
+ADD ECX,PlantClassSize
+00438ACB:
+IMUL EDX,EDX,PlantClassSize
+00438F32:
+IMUL EDX,EDX,PlantClassSize
+00481CFC:
+ADD EAX,PlantClassSize
+00481D07:
+IMUL ECX,ECX,PlantClassSize
+00481D2D:
+ADD EAX,PlantClassSize
+0048235C:
+IMUL ESI,ESI,PlantClassSize
+00524DB4:
+IMUL EAX,EAX,PlantClassSize
+0052CBBE:
+IMUL EAX,EAX,PlantClassSize
+00530431:
+IMUL EAX,EAX,PlantClassSize
+005304A3:
+IMUL EAX,EAX,PlantClassSize
+
+
+00401AAB:
+push AllocPlantSize
+
+00401C07:
+push AllocPlantSize
+
+0041DEB5:
+push AllocPlantSize
+
+0048D5B3:
+push AllocPlantSize
+
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+unregistersymbol(PlantClassSize)
+45DCA8:
+mov [ebx+000000BC],edi
+//Alt: db 89 BB BC 00 00 00
+004109F4:
+IMUL EAX,EAX,0000014C
+0041BAEC:
+ADD EAX,0000014C
+0041BAFD:
+IMUL ECX,ECX,0000014C
+0041BB1D:
+ADD EAX,0000014C
+0041C964:
+ADD EAX,0000014C
+0041C96F:
+IMUL ECX,ECX,0000014C
+0041C988:
+ADD EAX,0000014C
+0041DE9B:
+IMUL EAX,EAX,0000014C
+0041DEAD:
+IMUL EDI,EDI,0000014C
+0041DF0F :
+IMUL EAX,EAX,0000014C
+0041E5A8 :
+ADD ECX,0000014C
+0041E5B1:
+IMUL EDX,EDX,0000014C
+0041E5CB:
+IMUL EDX,EDX,0000014C
+0041E5D3:
+ADD ECX,0000014C
+00438ACB:
+IMUL EDX,EDX,0000014C
+00438F32:
+IMUL EDX,EDX,0000014C
+00481CFC:
+ADD EAX,0000014C
+00481D07:
+IMUL ECX,ECX,0000014C
+00481D2D:
+ADD EAX,0000014C
+0048235C:
+IMUL ESI,ESI,0000014C
+00524DB4:
+IMUL EAX,EAX,0000014C
+0052CBBE:
+IMUL EAX,EAX,0000014C
+00530431:
+IMUL EAX,EAX,0000014C
+005304A3:
+IMUL EAX,EAX,0000014C
+
+
+
+00401AAB:
+push 00000148
+00401C07:
+push 00000148
+0041DEB5:
+push 00000148
+0048D5B3:
+push 00000148
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>44</ID>
+          <Description>"拓展僵尸指针"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+651280: //this is allocated memory, you have read,write,execute access
+//place your code here
+//这里写新指针初始化
+mov [edi+15C],ebx
+mov [edi+160],ebx
+mov [edi+164],ebx
+mov [edi+168],ebx
+
+mov [edi+16C],ebx
+mov [edi+170],ebx
+mov [edi+174],ebx
+mov [edi+178],ebx
+
+mov [edi+17C],ebx
+mov [edi+180],ebx
+mov [edi+184],ebx
+mov [edi+188],ebx
+
+originalcode:
+mov edx,[edi+04]
+cmp edx,ebx
+
+exit:
+jmp returnhere
+
+52277B:
+jmp 651280
+returnhere:
+
+//这里改指针上限
+define(ZombieClassSize,18C)
+define(AllocZombieSize,188)
+registersymbol(ZombieClassSize)
+00407CA9:
+push ZombieClassSize*400
+0041BB64:
+ADD EDI,ZombieClassSize
+0041BB76:
+IMUL EAX,EAX,ZombieClassSize
+0041BB8A:
+ADD EDI,ZombieClassSize
+0041C802:
+IMUL EAX,EAX,ZombieClassSize
+0041C904:
+ADD EAX,ZombieClassSize
+0041C90F:
+IMUL ECX,ECX,ZombieClassSize
+0041C928:
+ADD EAX,ZombieClassSize
+0041DDBB:
+IMUL EAX,EAX,ZombieClassSize
+0041DDCD:
+IMUL EDI,EDI,ZombieClassSize
+0041DE2F:
+IMUL EAX,EAX,ZombieClassSize
+0041E4DE:
+ADD ESI,ZombieClassSize
+0041E4E7:
+IMUL EAX,EAX,ZombieClassSize
+0041E502:
+IMUL ECX,ECX,ZombieClassSize
+0041E50A:
+ADD ESI,ZombieClassSize
+004601B8:
+IMUL EAX,EAX,ZombieClassSize
+004602F6:
+IMUL EAX,EAX,ZombieClassSize
+004679E5:
+IMUL EAX,EAX,ZombieClassSize
+0046D8E4:
+IMUL EAX,EAX,ZombieClassSize
+00481D52:
+LEA ESI,[EBP+ZombieClassSize]
+00481D5E:
+IMUL EAX,EAX,ZombieClassSize
+00481D78:
+ADD ESI,ZombieClassSize
+0048226C:
+IMUL ESI,ESI,ZombieClassSize
+00527FB6:
+IMUL EDI,EDI,ZombieClassSize
+0052809A:
+IMUL EAX,EAX,ZombieClassSize
+005289AF:
+IMUL EAX,EAX,ZombieClassSize
+00528A76:
+IMUL EAX,EAX,ZombieClassSize
+0052C71B:
+IMUL EDX,EDX,ZombieClassSize
+0052CB27:
+IMUL EAX,EAX,ZombieClassSize
+0052EF5E:
+IMUL EAX,EAX,ZombieClassSize
+0052EFA2:
+IMUL EAX,EAX,ZombieClassSize
+0052FAC9:
+IMUL EAX,EAX,ZombieClassSize
+0052FB1C:
+IMUL EAX,EAX,ZombieClassSize
+00530345:
+IMUL EAX,EAX,ZombieClassSize
+0053037B:
+IMUL ECX,ECX,ZombieClassSize
+005303C4:
+IMUL EAX,EAX,ZombieClassSize
+005303EF:
+IMUL ECX,ECX,ZombieClassSize
+005304DE:
+IMUL EAX,EAX,ZombieClassSize
+005346CF:
+IMUL EAX,EAX,ZombieClassSize
+005352E8:
+IMUL EAX,EAX,ZombieClassSize
+00535364:
+IMUL EAX,EAX,ZombieClassSize
+
+
+00401B78:
+push AllocZombieSize
+00401C5D:
+push AllocZombieSize
+0041DDD5:
+push AllocZombieSize
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+unregistersymbol(ZombieClassSize)
+52277B:
+mov edx,[edi+04]
+cmp edx,ebx
+//Alt: db 8B 57 04 3B D3
+00407CA9:
+push 00057000
+0041BB64:
+ADD EDI,0000015C
+0041BB76:
+IMUL EAX,EAX,0000015C
+0041BB8A:
+ADD EDI,0000015C
+0041C802:
+IMUL EAX,EAX,0000015C
+0041C904:
+ADD EAX,0000015C
+0041C90F:
+IMUL ECX,ECX,0000015C
+0041C928:
+ADD EAX,0000015C
+0041DDBB:
+IMUL EAX,EAX,0000015C
+0041DDCD:
+IMUL EDI,EDI,0000015C
+0041DE2F:
+IMUL EAX,EAX,0000015C
+0041E4DE:
+ADD ESI,0000015C
+0041E4E7:
+IMUL EAX,EAX,0000015C
+0041E502:
+IMUL ECX,ECX,0000015C
+0041E50A:
+ADD ESI,0000015C
+004601B8:
+IMUL EAX,EAX,0000015C
+004602F6:
+IMUL EAX,EAX,0000015C
+004679E5:
+IMUL EAX,EAX,0000015C
+0046D8E4:
+IMUL EAX,EAX,0000015C
+00481D52:
+LEA ESI,[EBP+0000015C]
+00481D5E:
+IMUL EAX,EAX,0000015C
+00481D78:
+ADD ESI,0000015C
+0048226C:
+IMUL ESI,ESI,0000015C
+00527FB6:
+IMUL EDI,EDI,0000015C
+0052809A:
+IMUL EAX,EAX,0000015C
+005289AF:
+IMUL EAX,EAX,0000015C
+00528A76:
+IMUL EAX,EAX,0000015C
+0052C71B:
+IMUL EDX,EDX,0000015C
+0052CB27:
+IMUL EAX,EAX,0000015C
+0052EF5E:
+IMUL EAX,EAX,0000015C
+0052EFA2:
+IMUL EAX,EAX,0000015C
+0052FAC9:
+IMUL EAX,EAX,0000015C
+0052FB1C:
+IMUL EAX,EAX,0000015C
+00530345:
+IMUL EAX,EAX,0000015C
+0053037B:
+IMUL ECX,ECX,0000015C
+005303C4:
+IMUL EAX,EAX,0000015C
+005303EF:
+IMUL ECX,ECX,0000015C
+005304DE:
+IMUL EAX,EAX,0000015C
+005346CF:
+IMUL EAX,EAX,0000015C
+005352E8:
+IMUL EAX,EAX,0000015C
+00535364:
+IMUL EAX,EAX,0000015C
+
+
+
+00401B78:
+push 00000158
+00401C5D:
+push 00000158
+0041DDD5:
+push 00000158
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>45</ID>
+          <Description>"拓展子弹指针"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+define(ProjectileClassSize,000000B4)
+define(AllocProjectile,B0)
+
+651300:
+mov [ebp+94],ecx
+mov [ebp+98],ecx
+mov [ebp+9c],ecx
+mov [ebp+A0],ecx
+
+mov [ebp+A4],ecx
+mov [ebp+A8],ecx
+mov [ebp+Ac],ecx
+mov [ebp+B0],ecx
+
+originalcode:
+mov [ebp+74],ecx
+mov [ebp+50],cl
+
+exit:
+jmp returnhere
+
+46C7E6:
+jmp 651300
+nop
+returnhere:
+
+00407D1B:
+push ProjectileClassSize*1000
+41bc28:
+add edi,ProjectileClassSize
+41bc3a:
+imul eax,eax,ProjectileClassSize
+41bc4e:
+add edi,ProjectileClassSize
+41c9c4:
+add eax,ProjectileClassSize
+41c9cf:
+imul ecx,ecx,ProjectileClassSize
+41c9e8:
+add eax,ProjectileClassSize
+41df7c:
+imul eax,eax,ProjectileClassSize
+41df8e:
+imul esi,esi,ProjectileClassSize
+41df96:
+push AllocProjectile
+41e60e:
+add esi,ProjectileClassSize
+41e617:
+imul eax,eax,ProjectileClassSize
+41e632:
+imul ecx,ecx,ProjectileClassSize
+41e63a:
+add esi,ProjectileClassSize
+481da3:
+add eax,ProjectileClassSize
+481dae:
+imul ecx,ecx,ProjectileClassSize
+481dc8:
+add eax,ProjectileClassSize
+48244c:
+imul esi,esi,ProjectileClassSize
+
+
+
+
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+45DCA8:
+mov [ebx+000000BC],edi
+//Alt: db 89 BB BC 00 00 00
+
+
+41bc28:
+add edi,00000094
+41bc3a:
+imul eax,eax,00000094
+41bc4e:
+add edi,00000094
+41c9c4:
+add eax,00000094
+41c9cf:
+imul ecx,ecx,00000094
+41c9e8:
+add eax,00000094
+41df7c:
+imul eax,eax,00000094
+41df8e:
+imul esi,esi,00000094
+41df96:
+push 90
+41e60e:
+add esi,94
+41e617:
+imul eax,eax,94
+41e632:
+imul ecx,ecx,94
+41e63a:
+add esi,94
+481da3:
+add eax,94
+481dae:
+imul ecx,ecx,94
+481dc8:
+add eax,94
+48244c:
+imul esi,esi,94
+
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

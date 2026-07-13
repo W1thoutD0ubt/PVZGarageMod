@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>817</ID>
+      <Description>"僵尸权重"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+/*
+二爷 750
+大爷 500
+舞王 2000
+四爷 500
+*/
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>809</ID>
+          <Description>"普僵"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>821</ID>
+          <Description>"路障"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*2</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>820</ID>
+          <Description>"撑杆"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*3</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>819</ID>
+          <Description>"铁桶"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>818</ID>
+          <Description>"二爷"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*5</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>822</ID>
+          <Description>"三爷"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*6</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>810</ID>
+          <Description>"大爷"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*7</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>811</ID>
+          <Description>"舞王"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>823</ID>
+          <Description>"潜水"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*b</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>824</ID>
+          <Description>"冰车"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*c</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>825</ID>
+          <Description>"雪橇"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*d</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>826</ID>
+          <Description>"海豚"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*e</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>827</ID>
+          <Description>"小丑"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*f</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>828</ID>
+          <Description>"气球"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*10</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>829</ID>
+          <Description>"矿工"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*11</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>830</ID>
+          <Description>"跳跳"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*12</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>831</ID>
+          <Description>"雪人"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*13</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>832</ID>
+          <Description>"蹦极"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*14</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>813</ID>
+          <Description>"扶梯"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*15</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>833</ID>
+          <Description>"投篮"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*16</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>834</ID>
+          <Description>"巨人"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0069DA94+1c*17</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>CreateCardthree</Name>
+      <Address>13080000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>CreateSun</Name>
+      <Address>008D0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"PlantsVsZombies.exe"+38E74</Address>
+      <Comment>列
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"PlantsVsZombies.exe"+38E7A</Address>
+      <Comment>行
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>156</ID>
+      <Description>"僵尸移动"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+cmp [ecx+24],#12 //僵尸ID
+je next1
+cmp [ecx+24],#22 //僵尸ID
+jne originalcode
+next1:
+pushad
+mov ebx,[esi+4]
+mov eax,[ebx+B0] //最多时植物数
+mov ebx,[ebx+AC] //目标植物指针
+mov ecx,[esi+1C] //所在行
+mov edx,[esi+8] //X
+while:
+cmp byte [ebx+141],#0 //判断植物是否存在
+jne next
+cmp byte [ebx+142],#0 //判断植物是否压扁
+jne next
+cmp [ebx+24],#38 //植物ID
+jne next
+cmp [ebx+1C],ecx //所在行
+jne next
+mov edi,[ebx+8] //X
+sub edi,edx
+cmp edi,#40
+jg next
+cmp edi,#-80
+jg end
+next:
+add ebx,PlantClassSize //+下一个
+test eax,eax
+dec eax
+jg while
+popad
+jmp originalcode
+end:
+popad
+jmp 52AB37
+
+originalcode:
+fsub [esp+8]
+jmp 52AB37
+
+52AB2A:
+jmp newmem
+
+[DISABLE]
+dealloc(newmem)
+52AB2A:
+fsub [esp+8]
+jmp 52AB37
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"僵尸吃植物地址"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//esi 植物指针
+//ebp 僵尸指针
+cmp [esi+24],#38 //植物ID
+jne originalcode
+mov ecx,[ebp+24] //僵尸ID
+test ecx,ecx
+je next
+cmp ecx,#1
+je next
+cmp ecx,#2
+je next
+cmp ecx,#4
+je next
+cmp ecx,#6
+jne originalcode
+next:
+cmp [ebp+C4],#0 //1类饰品
+jne originalcode
+pushad
+mov ecx,esi
+mov esi,#-1
+mov [ecx+40],esi //植物血量
+xor ebx,ebx
+mov edi,ebp
+mov edx,[edi]
+mov ecx,[edi+118]
+mov eax,[edx+820]
+mov edx,[eax+8]
+movzx eax,cx
+lea eax,[eax+eax*4]
+shl eax,5
+add eax,[edx]
+push ebx
+push 66E9D0
+push eax
+call 473A40
+mov edx,[edi]
+mov ecx,[edi+118]
+mov eax,[edx+820]
+mov edx,[eax+8]
+movzx eax,cx
+lea eax,[eax+eax*4]
+shl eax,5
+add eax,[edx]
+push esi
+push 668EC8
+push eax
+call 473A40
+mov [edi+C4],#1
+mov [edi+D0],#370
+popad
+
+originalcode:
+add [esi+40],-4
+mov ecx,[esi+40]
+jmp returnhere+2
+
+52FCF0:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+52FCF0:
+add [esi+40],-4
+mov ecx,[esi+40]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4760</ID>
+      <Description>"金盏花不生产"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+463392:
+test eax,eax
+
+[DISABLE]
+463392:
+je 4633E9
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

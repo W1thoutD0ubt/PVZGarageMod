@@ -1,0 +1,1504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>10433</ID>
+      <Description>"笔记"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+/*
+植物（指针已拓展）
++14c 隐身倒计时
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10435</ID>
+      <Description>"点我"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>10437</ID>
+          <Description>"函数"</Description>
+          <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1404</ID>
+              <Description>"Board::DealWithZombies 条件处理僵尸"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+newmem:
+
+label(Board::DealWithZombies)
+registersymbol(Board::DealWithZombies)
+/*Board::DealWithZombies
+(int* theParameterArray2,void Function()
+int* theParameterArray1,bool Function(),
+eax = Board* this)*/
+Board::DealWithZombies:
+push ebp
+mov ebp,esp
+push edi
+mov edi,eax//Board
+push esi
+push ebx
+
+
+xor esi,esi
+push esi
+mov esi,esp
+Lxh:
+mov edx,edi
+call 41c8f0  //遍历函数
+test al,al
+je short Lxhe
+push esi
+mov esi,[esi]  //esi=遍历对象的基址
+//此处为遍历代码
+
+//jmp short g0
+
+//条件函数
+mov eax,[ebp+8]
+test eax,eax
+je short core//无条件
+mov ebx,[ebp+c]//参数数组
+mov eax,[ebx]//数组大小
+IfParameterEnd:
+cmp al,0//不含自身
+jng short ParameterEnd
+add ebx,4
+push [ebx]
+dec al
+jmp short IfParameterEnd
+
+ParameterEnd:
+call [ebp+8]//条件判断函数,esi=僵尸
+
+
+test eax,eax
+je short g0
+
+
+core:
+//处理函数
+mov eax,[ebp+10]
+test eax,eax
+je short g0//无处理
+mov ebx,[ebp+14]//参数数组
+mov eax,[ebx]//数组大小
+IfParameterEnd1:
+cmp al,0//不含自身
+jng short ParameterEnd1
+add ebx,4
+push [ebx]
+dec al
+jmp short IfParameterEnd1
+
+ParameterEnd1:
+call [ebp+10]//处理函数,esi=僵尸
+
+g0:
+pop esi
+jmp short Lxh
+Lxhe:
+pop esi
+
+
+pop ebx
+pop esi
+pop edi
+pop ebp
+ret 10
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1408</ID>
+              <Description>"Board::ProjectileHitZombieCircle  AOE子弹"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+newmem:
+
+label(Board::ProjectileHitZombieCircle)
+registersymbol(Board::ProjectileHitZombieCircle)
+/*Board::ProjectileHitZombieCircle
+(bool IfOnlyRow,int theOffset,
+int theRadius,Projectile* this,
+esi = Zombie* this)*/
+Board::ProjectileHitZombieCircle:
+push ebp
+mov ebp,esp
+cmp byte ptr [esi+ec],1
+je short g0
+cmp byte ptr [esi+ba],0
+je short g0
+
+mov eax,[ebp+8]
+cmp [ebp+14],0
+je short MultipleRow
+mov ecx,[eax+1c]
+cmp ecx,[esi+1c]
+jne short g0
+MultipleRow:
+
+push esi
+push edi
+push ebx
+mov ebx,esi
+mov esi,eax
+
+db 83 EC 10//sub esp,10
+mov edi,esp
+call 5320B0
+
+mov ecx,[esi+8]
+add ecx,[ebp+10]
+mov edx,[esi+C]
+add edx,[ebp+10]
+push [ebp+c]
+call 41c850
+db 83 C4 14//add esp,14
+and eax,ff
+pop ebx
+pop edi
+pop esi
+pop ebp
+ret 10
+g0:
+xor eax,eax
+g1:
+pop ebp
+ret 10
+
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>5181</ID>
+              <Description>"Projectile::UpdateFog"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+newmem:
+
+label(Projectile::UpdateFog)
+registersymbol(Projectile::UpdateFog)
+
+/*Projectile::UpdateFog
+(esi = Projectile* this)*/
+Projectile::UpdateFog:
+pushad
+mov ebp,esp
+
+//处理函数传参顺序颠倒
+db 6a 00
+mov edx,esp
+
+//条件函数传参顺序颠倒
+push esi//Projectile* this
+push #30//int theRadius
+push 0
+db 6a 00
+db 6a 04
+mov ecx,esp
+
+push edx
+push FogHitZombie //处理函数
+push ecx
+push CircleFoundZombie//判断函数
+mov eax,[esi+4]
+call Board::DealWithZombies
+
+push (float)5
+fld [esp]
+fsub [esi+38]
+push #2000
+fidiv [esp]
+pop eax
+pop eax
+fstp [esi+48]
+
+
+mov esp,ebp
+popad
+
+
+ret
+
+
+dd 0
+
+CircleFoundZombie:
+test [esi+60],3f
+jne short NotTheSuitTime
+push [esp+10]
+push [esp+10]
+push [esp+10]
+push [esp+10]
+call Board::ProjectileHitZombieCircle
+ret 10
+
+NotTheSuitTime:
+xor eax,eax
+ret 10
+
+
+
+dd 0
+FogHitZombie:
+mov eax,1
+push #40//伤害
+call 5317C0
+ret
+
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1353</ID>
+          <Description>"篮球子弹贴图（701000临时储存贴图）"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+mov edx,[006A72F8]
+
+originalcode:
+cmp byte ptr [esi+80],10
+jne short L11
+mov edx,[701000]
+//激活显示
+/*pushad
+push [ebp+c]
+push [esi+4]
+call 41A730
+popad*/
+jmp returnhere
+L11:
+
+exit:
+jmp returnhere
+
+46E63E:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+46E63E:
+mov edx,[006A72F8]
+//Alt: db 8B 15 F8 72 6A 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4939</ID>
+          <Description>"子弹尺寸偏移"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp [esi+5c],9
+jne short originalcode
+cmp byte ptr [esi+80],10
+jne short originalcode
+push (float)0.5
+fmul [esp]
+pop ecx
+push (float)80
+fld [esp+30]
+fsub [esp]
+fstp [esp+30]
+pop ecx
+push (float)70
+fld [esp+34]
+fsub [esp]
+fstp [esp+34]
+pop ecx
+
+
+originalcode:
+fst dword ptr [esp+10]
+fstp dword ptr [esp+0C]
+
+exit:
+jmp returnhere
+
+46E7D6:
+jmp newmem
+nop 3
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+46E7D6:
+db D9 54 24 10 D9 5C 24 0C
+//fst dword ptr [esp+10]
+//fstp dword ptr [esp+0C]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2350</ID>
+          <Description>"子弹颜色（无自旋）"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+push 0072289C
+
+originalcode:
+mov ebx,[ebp+8]
+
+cmp [ebx+5c],9
+jne short exit
+cmp byte ptr [ebx+80],10
+jne short exit
+mov [esp],color1
+//mov [esp+4],1
+
+mov [color1+c],80
+cmp [ebx+60],40
+jg short Next
+push [ebx+60]
+shl [esp],1
+pop [color1+c]
+
+Next:
+
+exit:
+jmp returnhere
+
+dd 0
+color1:
+dd ff ff ff 80
+
+
+46E805:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+46E805:
+push 0072289C
+//Alt: db 68 9C 28 72 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5182</ID>
+          <Description>"子弹更新"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+call 0046DC70
+
+originalcode:
+cmp [esi+5c],9
+jne short exit
+cmp byte ptr [esi+80],10
+jne short exit
+
+call Projectile::UpdateFog
+
+
+exit:
+jmp returnhere
+
+46E507:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+46E507:
+db E8 64 F7 FF FF
+//call 0046DC70
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5183</ID>
+          <Description>"AOE植物伤害"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+//ebx僵尸,ebp植物
+newmem:
+call 005317C0
+
+originalcode:
+cmp [ebp+24],#10//大喷
+je short FumeShroomHit
+cmp [ebp+24],#42
+jne short NFumeShroomHit
+cmp [ebp+90],#42
+jne short FumeShroomHit
+push ebx
+push [ebp+c]
+mov ebx,ebp
+sub [ebp+c],#30
+call CreateFog
+pop [ebp+c]
+pop ebx
+FumeShroomHit:
+cmp byte ptr [ebx+ba],0
+jne short NFumeShroomHit
+call CreateFog
+NFumeShroomHit:
+
+exit:
+jmp returnhere
+dd 0
+
+
+CreateFog:
+push 9//子弹类型
+push [ebx+1c]//子弹行数
+push [ebx+20]//图层
+push [ebx+c]//y坐标
+add [esp],#60
+push [ebx+8]//x坐标
+add [esp],#30
+mov eax,[ebx+4]
+call 0040D620
+//返回值eax=子弹基址
+mov byte ptr [eax+80],10
+mov [eax+58],7
+mov [eax+3c],(float)1
+mov [eax+68],0
+mov [eax+6C],0
+mov [eax+84],#500
+ret
+
+
+45EE22:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+45EE22:
+db E8 99 29 0D 00
+//call 005317C0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10436</ID>
+          <Description>"植物进入隐身"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+mov eax,[esp+2C]
+test eax,eax
+je short s1
+mov [eax+14c],#2000
+mov [eax+00000130],00000064
+s1:
+
+mov eax,[esp+24]
+test eax,eax
+je short s2
+mov [eax+14c],#2000
+s2:
+
+mov eax,[esp+20]
+test eax,eax
+je short s3
+mov [eax+14c],#2000
+s3:
+
+
+originalcode:
+
+
+exit:
+jmp returnhere
+
+466B1F:
+jmp newmem
+nop
+returnhere:
+
+0040E137:
+jmp short 0040E142
+
+00466B2E:
+db 66 90
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+466B1F:
+db 8B 44 24 2C 85 C0
+//mov eax,[esp+2C]
+//test eax,eax
+
+
+0040E137:
+je short 0040E14F
+
+00466B2E:
+db 74 0A
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2814</ID>
+          <Description>"植物高图层绘制"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+
+newmem:
+mov edi,[ebp+0C]
+mov ebx,[ebp+08]
+
+cmp [ebx+14c],0
+jle short exit
+
+push edi
+call 586B40
+
+mov byte ptr [edi+48],1
+mov ecx,ff
+mov [edi+30],ecx
+mov [edi+34],ecx
+mov [edi+38],ecx
+mov [edi+3C],ecx
+
+cmp [ebx+14c],#100
+jle short SetAlpha
+cmp [ebx+14c],#1900
+jl short NSetAlpha
+SetAlpha:
+fld1
+fild [ebx+14c]
+fmul [data]
+fcos
+fsubp st(1),st
+fmul [data+4]
+fistp [edi+3c]
+NSetAlpha:
+
+push #-20
+push #20
+mov eax,edi
+mov ebx,[701004]
+call 587150
+
+call 586BD0
+
+
+
+exit:
+mov ecx,[esp+000000B4]
+jmp returnhere
+
+dd 0
+data:
+dd (float)0.0314
+dd (float)127
+
+
+
+466091:
+jmp newmem
+nop 2
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+466091:
+db 8B 8C 24 B4 00 00 00
+//mov ecx,[esp+000000B4]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8719</ID>
+          <Description>"植物隐身"</Description>
+          <Options moAlwaysHideChildren="1" moManualExpandCollapse="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <Color>D5D500</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>676</ID>
+              <Description>"隐身植物更新"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+
+
+
+label(PlantInvisibility1)
+registersymbol(PlantInvisibility1)
+PlantInvisibility1:
+cmp [eax+14c],0
+jle short originalcode
+dec [eax+14c]
+
+
+originalcode:
+push ebx
+mov ebx,eax
+mov dl,[ebx+00000144]
+
+exit:
+jmp returnhere
+dd 0
+label(PlantInvisibility2)
+registersymbol(PlantInvisibility2)
+PlantInvisibility2:
+
+
+463E40:
+jmp newmem
+nop 4
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+463E40:
+push ebx
+mov ebx,eax
+mov dl,[ebx+00000144]
+//Alt: db 53 8B D8 8A 93 44 01 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>8681</ID>
+              <Description>"投石车不攻击隐身植物"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(returnhere)
+label(originalcode)
+label(exit)
+
+PlantInvisibility2:
+cmp [eax+14c],0
+jg 005259A9
+
+originalcode:
+mov edi,[eax+1C]
+mov ecx,[ebp+08]
+
+exit:
+jmp returnhere
+dd 0
+label(PlantInvisibility3)
+registersymbol(PlantInvisibility3)
+PlantInvisibility3:
+
+5258C4:
+jmp PlantInvisibility2
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+5258C4:
+mov edi,[eax+1C]
+mov ecx,[ebp+08]
+//Alt: db 8B 78 1C 8B 4D 08
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>693</ID>
+              <Description>"僵尸子弹不攻击隐身植物"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+label(returnhere)
+label(originalcode)
+label(exit)
+
+PlantInvisibility3:
+cmp [esi+14c],0
+jg 0046CAD0
+
+originalcode:
+cmp dword ptr [ebp+5C],0D
+jne 0046CB17
+
+exit:
+jmp returnhere
+dd 0
+label(PlantInvisibility4)
+registersymbol(PlantInvisibility4)
+PlantInvisibility4:
+
+46CAF0:
+jmp PlantInvisibility3
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+46CAF0:
+cmp dword ptr [ebp+5C],0D
+jne 0046CB17
+//Alt: db 83 7D 5C 0D 75 21
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>3025</ID>
+              <Description>"僵尸不攻击隐身植物"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(returnhere)
+label(originalcode)
+label(exit)
+
+PlantInvisibility4:
+mov esi,[esp+28]
+cmp [esi+14c],0
+jg 0052E578
+
+originalcode:
+mov edx,[esi+24]
+
+exit:
+jmp returnhere
+
+dd 0
+label(PlantInvisibility5)
+registersymbol(PlantInvisibility5)
+PlantInvisibility5:
+
+52E4FC:
+jmp PlantInvisibility4
+nop 2
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+52E4FC:
+db 8B 74 24 28 8B 56 24
+//mov esi,[esp+28]
+//mov edx,[esi+24]
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10434</ID>
+              <Description>"植物颜色"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(returnhere)
+label(originalcode)
+label(exit)
+
+PlantInvisibility5:
+cmp [esi+14C],0
+jle short originalcode
+
+cmp [esi+14C],#144
+jg short AlphaStable
+push [esi+14C]//x
+fild [esp]
+fmul [data]//-wx
+fcos
+fmul [data+4]
+fadd [data+8]
+fimul [ebx+54]
+fistp [ebx+54]
+pop eax
+
+jmp short originalcode
+
+AlphaStable:
+cmp [esi+14C],#1900//隐身时间上限-100
+jg short AlphaFlashing
+
+push (float)0.2
+fild [ebx+54]
+fmul [esp]
+fistp [ebx+54]
+pop eax
+jmp short originalcode
+
+AlphaFlashing:
+push [esi+14C]
+sub [esp],#2000//隐身时间上限
+push (float)0.008
+fld1
+fild [esp+4]
+fmul [esp]
+faddp st(1),st
+fimul [ebx+54]
+fistp [ebx+54]
+pop eax
+pop eax
+
+
+originalcode:
+cmp byte ptr [esi+00000145],00
+
+exit:
+jmp returnhere
+
+dd 0
+data:
+dd (float)0.10908307824964559855773067303054
+dd (float)0.4
+dd (float)0.6
+
+
+463720:
+jmp PlantInvisibility5
+nop 2
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+463720:
+db 80 BE 45 01 00 00 00
+//cmp byte ptr [esi+00000145],00
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10443</ID>
+          <Description>"曾取消紫卡"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+00467EDE:
+nop 5
+
+00463538:
+jmp short 0046354B
+
+0041D865:
+jmp short 0041D879
+
+004877A9:
+nop 5
+ 
+ 
+[DISABLE]
+00467EDE:
+db 83 F8 2A 74 08
+
+00463538:
+jne short 0046354B
+
+0041D865:
+jne short 0041D879
+
+004877A9:
+db 83 FD 2A 74 05
+
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10442</ID>
+          <Description>"大脑挑战者"</Description>
+          <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>2388</ID>
+              <Description>"Board::DealWithProjectile 条件处理子弹"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+newmem:
+
+label(Board::DealWithProjectile)
+registersymbol(Board::DealWithProjectile)
+
+/*Board::DealWithProjectile
+(int* theParameterArray2,void Function()
+int* theParameterArray1,bool Function(),
+eax = Board* this)*/
+Board::DealWithProjectile:
+push ebp
+mov ebp,esp
+push edi
+mov edi,eax//Board
+push esi
+push ebx
+
+
+xor esi,esi
+push esi
+Lxh:
+mov esi,esp
+mov edx,edi
+call 41C9B0  //遍历函数
+test al,al
+je short Lxhe
+push esi
+mov esi,[esi]  //esi=遍历对象的基址
+//此处为遍历代码
+
+//jmp short g0
+
+//条件函数
+mov eax,[ebp+8]
+test eax,eax
+je short core//无条件
+mov ebx,[ebp+c]//参数数组
+mov eax,[ebx]//数组大小
+IfParameterEnd:
+cmp al,0//不含自身
+jng short ParameterEnd
+add ebx,4
+push [ebx]
+dec al
+jmp short IfParameterEnd
+
+ParameterEnd:
+call [ebp+8]//条件判断函数,esi=子弹
+
+
+test eax,eax
+je short g0
+
+
+core:
+//处理函数
+mov eax,[ebp+10]
+test eax,eax
+je short g0//无处理
+mov ebx,[ebp+14]//参数数组
+mov eax,[ebx]//数组大小
+IfParameterEnd1:
+cmp al,0//不含自身
+jng short ParameterEnd1
+add ebx,4
+push [ebx]
+dec al
+jmp short IfParameterEnd1
+
+ParameterEnd1:
+call [ebp+10]//处理函数,esi=子弹
+
+g0:
+pop esi
+jmp short Lxh
+Lxhe:
+pop esi
+
+
+pop ebx
+pop esi
+pop edi
+pop ebp
+ret 10
+
+db 00 00
+label(Board::DealWithGridItem)
+registersymbol(Board::DealWithGridItem)
+Board::DealWithGridItem:
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>2948</ID>
+              <Description>"Projectile::TransformMovingStyle"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+newmem:
+label(Projectile::TransformMovingStyle)
+registersymbol(Projectile::TransformMovingStyle)
+
+
+
+/* Projectile::TransformMovingStyle
+(edi=Projectile* this)*/
+Projectile::TransformMovingStyle:
+mov eax,[edi+58]
+
+cmp eax,2
+je short s0
+cmp eax,5
+je short s0
+test eax,eax
+jne short N0
+s0:
+mov [edi+58],7
+mov [edi+3c],(float)3
+N0:
+/*
+cmp eax,1
+jne short N1
+mov [edi+5c],B//跨行投掷
+N1:
+*/
+cmp eax,6
+jne short N6
+mov [edi+58],7
+mov [edi+3c],(float)-3
+N6:
+
+ret
+
+db 00 00
+label(Projectile::ChangeDirection)
+registersymbol(Projectile::ChangeDirection)
+Projectile::ChangeDirection:
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>420</ID>
+              <Description>"Zombie::GetZombieDistance"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+newmem:
+
+
+/*Zombie::GetZombieDistance
+(int y,int x,esi = Zombie* this)*/
+label(Zombie::GetZombieDistance)
+registersymbol(Zombie::GetZombieDistance)
+Zombie::GetZombieDistance:
+push ebp
+mov ebp,esp
+db 83 EC C//sub esp,C
+push (float)30
+fild [ebp+c]
+fstp [esp+c]
+fild [ebp+8]
+fstp [esp+8]
+fld [esi+30]
+fadd [esp]
+fstp [esp+4]
+fld [esi+2c]
+fadd [esp]
+fstp [esp]
+call 407b10
+fistp [esp]
+mov eax,[esp]
+
+db 83 C4 10//add esp,10
+pop ebp
+ret 8 //eax=距离
+
+/*
+label(Zombie::GetZombieReverseDistance)
+registersymbol(Zombie::GetZombieReverseDistance)
+Zombie::GetZombieReverseDistance:
+*/
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10439</ID>
+              <Description>"Zombie::UpdateSuckedProjectile"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+newmem:
+
+label(Zombie::UpdateSuckedProjectile)
+registersymbol(Zombie::UpdateSuckedProjectile)
+/*Zombie::UpdateSuckedProjectile
+(Zombie* this,esi=Projectile* this)*/
+Zombie::UpdateSuckedProjectile:
+push ebp
+mov ebp,esp
+
+push edi
+mov edi,esi
+call Projectile::TransformMovingStyle
+pop edi
+mov byte ptr [esi+74],0
+
+
+push eax
+mov ecx,[ebp+8]
+fld [esi+34]
+fsub [ecx+30]
+fld [esi+30]
+fadd [data]
+fsub [ecx+2C]
+call 639EFA
+fstp [esp]
+
+//ebp-4=cita
+
+
+push esi
+push [esi+c]
+push [esi+8]
+add [esp],#30
+mov esi,[ebp+8]
+call Zombie::GetZombieDistance
+pop esi
+
+cmp eax,#40
+jg short NHit
+mov eax,[ebp+8]
+push eax
+mov ecx,esi
+call 46E000
+pop eax
+call SetSmokeEffect
+mov esp,ebp
+pop ebp
+ret 4
+NHit:
+
+
+fld [Euler]
+push eax
+fild [esp]
+push (float)86.705202312138728323699421965318//σ
+fdiv [esp]//r/σ
+fld st
+fmulp st(1),st
+fchs //-(r/σ)^2
+
+call 6398F0//e^[-(r/σ)^2]
+
+
+
+
+push (float)0.5//k
+fmul [esp]//F
+fchs
+fld st
+
+fld [ebp-4]
+fsincos
+//st0=cos,st1=sin
+
+fmulp st(2),st
+fmulp st(2),st
+//st0=Fx,st1=Fy
+//设定m=1
+////st0=ax,st1=ay
+
+fadd [esi+3c]//vx0
+fstp [esi+3c]//vx
+fadd [esi+40]//vy0
+fstp [esi+40]//vy
+
+fstp st
+fstp st
+
+mov esp,ebp
+pop ebp
+ret 4
+
+
+
+
+
+//eax=Zombie* this
+dd 0
+SetSmokeEffect:
+push esi
+push edi
+mov edi,eax
+push #51//特效ID
+push [edi+20]//固定值
+push [edi+C]
+add [esp],#20
+fild [esp]
+fstp [esp]//y坐标
+push [edi+8]
+add [esp],#200
+fild [esp]
+fstp [esp]//x坐标
+mov esi,[edi]
+mov esi,[esi+820]
+mov esi,[esi]
+call 518a70
+test eax,eax
+je short fail
+mov edx,eax
+mov esi,[00701008]
+call 518600
+fail:
+pop edi
+pop esi
+ret
+
+
+
+
+Euler:
+dd (float)2.7182818284590452353602874713527
+
+data:
+dd (float)30
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10438</ID>
+              <Description>"Zombie::UpdateBrainChallenger"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+newmem:
+
+
+/*Zombie::UpdateBrainChallenger
+(esi = Zombie* this)*/
+label(Zombie::UpdateBrainChallenger)
+registersymbol(Zombie::UpdateBrainChallenger)
+Zombie::UpdateBrainChallenger:
+pushad
+mov ebp,esp
+
+
+//处理函数传参顺序颠倒
+//条件函数传参顺序颠倒
+push esi//Zombie* this
+db 6a 01
+mov ecx,esp
+
+push ecx
+push Zombie::UpdateSuckedProjectile //处理函数
+push ecx
+push CanBeSucked//判断函数
+mov eax,[esi+4]
+call Board::DealWithProjectile
+
+mov esp,ebp
+popad
+
+ret //eax=距离
+
+
+//Zombie* this,esi=Projectile* this
+CanBeSucked:
+cmp [esi+58],1
+je short CanNotBeSucked
+mov ecx,[esi+5C]
+cmp ecx,9
+je short CanNotBeSucked
+cmp ecx,D
+je short CanNotBeSucked
+
+push esi
+push [esi+c]
+push [esi+8]
+mov esi,[esp+10]
+call Zombie::GetZombieDistance
+pop esi
+
+cmp eax,#150
+jg short CanNotBeSucked
+xor eax,eax
+inc al
+ret 4
+
+CanNotBeSucked:
+xor eax,eax
+ret 4
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+//code from here till the end of the code will be used to disable the cheat
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10440</ID>
+              <Description>"大脑挑战者更新（血量也在这改）"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+
+originalcode:
+call Zombie::UpdateBrainChallenger
+
+exit:
+jmp 0052A8D6
+
+52A862:
+jmp newmem
+nop 4
+returnhere:
+
+00522DDB:
+mov [edi+000000C8],#1500
+//血量1500
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+52A862:
+db 8B 56 04 8B 8A 4C 55 00 00
+//mov edx,[esi+04]
+//mov ecx,[edx+0000554C]
+
+00522DDB:
+mov [edi+000000C8],00000546
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"PlantsVsZombies.exe"+38E74</Address>
+      <Comment>列
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"PlantsVsZombies.exe"+38E7A</Address>
+      <Comment>行
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>

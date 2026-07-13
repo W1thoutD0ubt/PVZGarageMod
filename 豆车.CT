@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>68</ID>
+      <Description>"杨桃索敌修改"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+alloc(newmem2,2048)
+label(returnhere2)
+alloc(newmem3,2048)
+
+newmem:
+x://取消原版索敌方式
+push ecx
+push 0
+push [esi+1c]
+mov eax,esi
+call 45EF10
+jmp returnhere
+
+newmem2:
+x2://原版索敌补偿修复（不按照豌豆射手之类的植物发射）
+cmp [esi+24],1D
+je 0045F287
+mov eax,[esp+1C]
+mov ecx,[esp+18]
+jmp returnhere2
+
+newmem3://不走原版发射子弹
+x3:
+cmp eax,1D
+jne 00466EAF
+jmp 466EA5
+
+45F272:
+jmp x2
+nop 3
+returnhere2:
+45F6E0:
+jmp x
+nop 2
+returnhere:
+466E99:
+jmp x3
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+dealloc(newmem2)
+dealloc(newmem3)
+45F6E0:
+push ecx
+push esi
+call 0045F470
+45F272:
+mov eax,[esp+1C]
+mov ecx,[esp+18]
+466E99:
+cmp eax,1D
+jne 00466EAF
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>70</ID>
+      <Description>"杨桃子弹发射"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+x:
+cmp ecx,1d
+jne originalcode
+call GetAnim
+cmp [eax+9c],ecx
+jne originalcode
+pushad
+mov edx,668D74
+mov esi,eax
+call 004745B0
+test al,al
+popad
+je originalcode
+
+
+cmp [edi+58],#135
+je pea_and_pea
+cmp [edi+58],#128
+je pea_and_pea
+cmp [edi+58],#121
+je pea_and_spike
+cmp [edi+58],#114
+je firepea
+cmp [edi+58],#107
+je firepea
+cmp [edi+58],#100
+je spike
+jmp originalcode
+
+
+pea_and_pea:
+pushad
+mov ebx,[edi+08]
+add ebx,#160
+mov edx,[edi+0c]
+add edx,#20
+mov ebp,0//子弹编号
+call zidan
+popad
+//上面子弹
+pushad
+mov ebx,[edi+08]
+add ebx,#15
+mov edx,[edi+0c]
+sub edx,#20
+mov ebp,0//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)-3.0
+popad
+pushad
+mov ebx,[edi+08]
+add ebx,#105
+mov edx,[edi+0c]
+sub edx,#20
+mov ebp,0//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)-3.0
+popad
+//下面子弹
+pushad
+mov ebx,[edi+08]
+add ebx,#15
+mov edx,[edi+0c]
+add edx,#100
+mov ebp,0//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)3.0
+fild [eax+0c]
+fadd [offset_y]
+fstp [eax+4c]
+popad
+pushad
+mov ebx,[edi+08]
+add ebx,#105
+mov edx,[edi+0c]
+add edx,#100
+mov ebp,0//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)3.0
+fild [eax+0c]
+fadd [offset_y]
+fstp [eax+4c]
+popad
+jmp originalcode
+
+
+pea_and_spike:
+pushad
+mov ebx,[edi+08]
+add ebx,#160
+mov edx,[edi+0c]
+add edx,#20
+mov ebp,0//子弹编号
+call zidan
+popad
+//上面子弹
+pushad
+mov ebx,[edi+08]
+add ebx,#15
+mov edx,[edi+0c]
+sub edx,#20
+mov ebp,8//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)-3.0
+mov [eax+68],(float)1.5708
+popad
+pushad
+mov ebx,[edi+08]
+add ebx,#105
+mov edx,[edi+0c]
+sub edx,#20
+mov ebp,8//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)-3.0
+mov [eax+68],(float)1.5708
+popad
+//下面子弹
+pushad
+mov ebx,[edi+08]
+add ebx,#15
+mov edx,[edi+0c]
+add edx,#100
+mov ebp,8//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)3.0
+fild [eax+0c]
+fadd [offset_y]
+fstp [eax+4c]
+mov [eax+68],(float)-1.5708
+popad
+pushad
+mov ebx,[edi+08]
+add ebx,#105
+mov edx,[edi+0c]
+add edx,#100
+mov ebp,8//子弹编号
+call zidan
+mov [eax+58],7
+mov [eax+40],(float)3.0
+fild [eax+0c]
+fadd [offset_y]
+fstp [eax+4c]
+mov [eax+68],(float)-1.5708
+popad
+jmp originalcode
+
+
+
+
+
+
+
+
+pea:
+pushad
+mov ebx,[edi+08]
+add ebx,#160
+mov edx,[edi+0c]
+add edx,#20
+mov ebp,0//子弹编号
+call zidan
+popad
+jmp originalcode
+
+
+
+
+
+firepea:
+pushad
+mov ebx,[edi+08]
+add ebx,#160
+mov edx,[edi+0c]
+add edx,#20
+mov ebp,0//子弹编号
+call zidan
+mov ecx,eax
+mov eax,[edi+28]
+call 46ECB0
+popad
+jmp originalcode
+
+
+spike:
+pushad
+mov ebx,[edi+08]
+add ebx,#160
+mov edx,[edi+0c]
+add edx,#20
+mov ebp,8//子弹编号
+call zidan
+popad
+jmp originalcode
+
+
+
+
+originalcode:
+cmp dword ptr [edi+48],01
+jne 004633FB
+
+exit:
+jmp returnhere
+
+
+GetAnim:
+//mov edx,[edi]
+//mov eax,[edx+00000820]
+//mov edx,[eax+08]
+//mov ecx,[edi+00000118]
+//and ecx,0000FFFF
+//lea eax,[ecx+ecx*4]
+//shl eax,05
+//add eax,[edx]
+//mov ecx,[edi+00000118]
+//ret
+mov edx,[edi]//*plant
+mov eax,[edx+00000820]
+mov edx,[eax+08]
+mov ecx,[edi+94]//*plant
+and ecx,0000FFFF
+lea eax,[ecx+ecx*4]
+shl eax,05
+add eax,[edx]//ebx=*anim
+mov ecx,[edi+0000094]
+ret
+zidan:
+push ebp//子弹 ID
+
+push [edi+1c]//行数
+push 0
+push edx//Y
+push ebx//X
+mov eax,[6a9ec0]
+mov eax,[eax+768]
+call 0040D620
+mov byte[eax+74],1//击中条件
+ret
+
+offset_y:
+dd (float)50.0
+dd 00
+4633EE:
+jmp x
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+dealloc(newmem)
+4633EE:
+cmp dword ptr [edi+48],01
+jne 004633FB
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>76</ID>
+      <Description>"超出屏幕销毁子弹【必要】"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+
+newmem:
+X:
+cmp [esi+58],7
+jne originalcode
+cmp [esi+08],#900
+jg delbullrt
+cmp [esi+08],-#100
+jl delbullrt
+cmp [esi+0c],#700
+jg delbullrt
+cmp [esi+0c],-#100
+jl delbullrt
+jmp originalcode
+delbullrt:
+mov eax,esi
+call 46EB20
+originalcode:
+fld dword ptr [esi+30]
+mov [esp+18],ebp
+jmp returnhere
+
+46E8D5:
+jmp X
+nop 2
+returnhere:
+
+
+[DISABLE]
+dealloc(newmem)
+46E8D5:
+fld dword ptr [esi+30]
+mov [esp+18],ebp
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>78</ID>
+      <Description>"占用两格"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+label(returnhere)
+
+newmem:
+X:
+cmp edi,1D
+je returnhere
+cmp edi,2F
+jne 0040D337
+jmp returnhere
+
+40D319:
+jmp X
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+40D319:
+cmp edi,2F
+jne 0040D337
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>79</ID>
+      <Description>"可以种植在屋顶路"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+
+
+newmem:
+X:
+cmp esi,1d
+je returnhere
+cmp esi,21
+jne 0040E2BE
+jmp returnhere
+
+40E293:
+jmp X
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+40E293:
+db 83 FE 21 75 26
+//cmp esi,21
+//jne 0040E2BE
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>80</ID>
+      <Description>"也可以种在花盆"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp esi,1D
+je 0040E2B2
+originalcode:
+test edx,edx
+jne 0040E511
+
+exit:
+jmp returnhere
+
+40E2A0:
+jmp newmem
+nop 3
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+40E2A0:
+db 85 D2 0F 85 69 02 00 00
+//test edx,edx
+//jne 0040E511
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1544</ID>
+      <Description>"杨桃索敌修正"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//eax 僵尸指针
+//esi 植物指针
+//45EF38 攻击
+//originalcode 停止
+test eax,eax
+jne 45EF38
+cmp [esi+24],#29 //植物ID
+jne originalcode
+pushad
+mov ebx,[esi+4]
+mov eax,[ebx+94] //最多时僵尸数
+mov ebx,[ebx+90] //目标僵尸指针
+mov ecx,[esi+8] //X
+lea ecx,[ecx-50]
+lea edx,[ecx+B4]
+while:
+cmp byte [ebx+EC],#0 //判断僵尸是否存在
+jne next
+cmp byte [ebx+BA],#0 //判断僵尸是否濒死
+je next
+cmp byte [ebx+B8],#0 //判断僵尸是否魅惑
+jne next
+cmp [ebx+8],ecx //X
+jl next
+cmp [ebx+8],edx //X
+jg next
+jmp end
+next:
+add ebx,ZombieClassSize
+test eax,eax
+dec eax
+jg while
+popad
+originalcode:
+xor al,al
+pop edi
+jmp returnhere
+end:
+popad
+jmp 45EF38
+
+45EF2C:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+45EF2C:
+jne 45EF38
+xor al,al
+pop edi
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

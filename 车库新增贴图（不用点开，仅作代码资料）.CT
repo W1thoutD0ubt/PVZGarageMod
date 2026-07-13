@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1481</ID>
+      <Description>"新增贴图"</Description>
+      <Options moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1479</ID>
+          <Description>"贴图代码"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+//alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+00651800:
+push ebx
+
+xor ebx,ebx
+s:
+imul eax,ebx,20
+add eax,00651900
+push eax//字符串地址
+lea ecx,[ebp-7C]
+call 404450
+lea eax,[ebp-7C]
+
+lea edx,[ebx+00000150]
+mov [ebp-04],edx//编号
+mov edx,[edi]
+mov edx,[edx+40]
+push eax
+lea ecx,[ebp-28]
+push ecx
+mov ecx,edi
+call edx
+mov ecx,eax
+call 59A980
+lea esi,[ebp-28]
+lea ecx,[ebx*4+701000]
+mov [ecx],eax//存入地址
+call 59A8C0
+lea ecx,[ebp-7C]
+call 404420
+inc ebx
+cmp ebx,#3
+jb short s
+
+pop ebx
+
+originalcode:
+mov al,01
+mov ecx,[ebp-0C]
+
+exit:
+jmp returnhere
+
+47D968:
+jmp 00651800
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+47D968:
+mov al,01
+mov ecx,[ebp-0C]
+//Alt: db B0 01 8B 4D F4
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>1480</ID>
+          <Description>"贴图字符串"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+00651900:
+db 'IMAGE_FUMESHROOM_FOG'
+00651920:
+db 'IMAGE_INVISIBILITY'
+00651940:
+db 'IMAGE_SMOKE'
+
+
+
+
+
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>newmem</Name>
+      <Address>00A90000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>ee</Name>
+      <Address>00A90800</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>ww</Name>
+      <Address>0BB20000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>gg</Name>
+      <Address>091F0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>getrandom</Name>
+      <Address>07D70000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>spawner</Name>
+      <Address>07070000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>suicide</Name>
+      <Address>09DE0300</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>firesound</Name>
+      <Address>02DA0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>powersub</Name>
+      <Address>02DA0100</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>jalapeno</Name>
+      <Address>05250200</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>pepper</Name>
+      <Address>08C60100</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>sound</Name>
+      <Address>054B0420</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>hop</Name>
+      <Address>04AB0200</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>bgmchange</Name>
+      <Address>04B20000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>spawn</Name>
+      <Address>02C40000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>summonzb</Name>
+      <Address>04790100</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>setter</Name>
+      <Address>04B20100</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>portal</Name>
+      <Address>04B30000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>quake</Name>
+      <Address>0A400200</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>movep</Name>
+      <Address>0A400300</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>plantp</Name>
+      <Address>0A400400</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>change</Name>
+      <Address>025D0420</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>movp</Name>
+      <Address>0A680000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>bullet</Name>
+      <Address>028D0200</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>battle</Name>
+      <Address>02300100</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>randplant</Name>
+      <Address>02BA0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>attack</Name>
+      <Address>02300000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>poison</Name>
+      <Address>00950000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>gLawnApp</Name>
+      <Address>006A9EC0</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Create</Name>
+      <Address>0F4F0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Car</Name>
+      <Address>02250000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>run</Name>
+      <Address>00940000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>main</Name>
+      <Address>00BA0000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>CreateCardthree</Name>
+      <Address>13080000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>CreateSun</Name>
+      <Address>008D0000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"PlantsVsZombies.exe"+38E74</Address>
+      <Comment>列
+</Comment>
+    </DisassemblerComment>
+    <DisassemblerComment>
+      <Address>"PlantsVsZombies.exe"+38E7A</Address>
+      <Comment>行
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
+</CheatTable>
