@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"向日葵"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//edi = &amp;plant
+	push 02
+	mov eax,0A
+    call 005AF400
+    xor ecx,ecx
+    test eax,01
+    setz cl
+    inc ecx
+    push ecx
+    mov eax,[edi+0C]
+    mov ecx,[edi+08]
+    push eax
+    push ecx
+    mov ecx,[edi+04]
+    call 0040CB10
+
+push 02
+push 04
+jmp 0045FB12
+
+0045FAC8:
+jmp newmem
+nop
+
+[DISABLE]
+dealloc(newmem)
+0045FAC8:
+push 02
+push 04
+jmp 0045FB12
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>关于表格信息:
+</Comments>
+</CheatTable>

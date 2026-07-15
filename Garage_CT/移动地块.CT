@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>66</ID>
+      <Description>"地图控制"</Description>
+      <Options moHideChildren="1" moActivateChildrenAsWell="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>42</ID>
+          <Description>"开局放置"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+alloc(temp,4)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(anim_fly)
+label(while)
+label(while1)
+newmem:
+cmp [esi+5568],1
+jne originalcode
+pushad
+push 0
+push 10
+mov eax,1
+push 0
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov [eax+20],000186a0
+mov [eax+c8],3
+mov [eax+1c],10
+add [eax+c],10
+    pushad
+    fld dword ptr [00679AAC]
+    sub esp,04
+    fstp dword ptr [esp]
+    push 0
+    push anim_fly
+    mov ecx,0
+    call 0045FD90
+    popad
+
+push 0
+push 10
+mov eax,1
+push 1
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov [eax+20],0
+mov [eax+c8],3
+mov [eax+1c],10
+
+push 0
+push 10
+mov eax,1
+push 2
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov [eax+20],0
+mov [eax+c8],3
+mov [eax+1c],10
+
+push edx
+mov edx,0
+while:
+push edx
+push 0
+push 10
+mov eax,2
+push edx
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov [eax+20],0
+mov [eax+c8],3
+mov [eax+1c],10
+pop edx
+
+add edx,1
+cmp edx,3
+jng while
+pop edx
+
+push edx
+mov edx,0
+while1:
+push edx
+push 0
+push 10
+mov eax,3
+push edx
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov [eax+20],0
+mov [eax+c8],3
+mov [eax+1c],10
+pop edx
+
+add edx,1
+cmp edx,3
+jng while1
+pop edx
+popad
+
+jmp originalcode
+//水草放置
+/*
+push edx
+mov edx,0
+while2:
+mov [temp],edx
+pushad
+push 0
+push 13
+mov eax,7
+push edx
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov edx,[temp]
+mov [column+edx*4],eax
+popad
+
+add edx,1
+cmp edx,8
+jng while2
+pop edx
+
+
+push edx
+mov edx,0
+while3:
+mov [temp],edx
+pushad
+push 0
+push 13
+mov eax,edx
+push 9
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+push ecx
+call 0040d120
+mov edx,[temp]
+mov [line+edx*4],eax
+popad
+
+add edx,1
+cmp edx,6
+jng while3
+pop edx
+jmp originalcode
+*/
+anim_fly:
+db 61 6e 69 6d 5f 66 6c 79 00
+originalcode:
+add [esi+00005568],edi
+
+exit:
+jmp returnhere
+
+"PlantsVsZombies.exe"+15B29:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+dealloc(temp)
+"PlantsVsZombies.exe"+15B29:
+add [esi+00005568],edi
+//Alt: db 01 BE 68 55 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>13</ID>
+          <Description>"僵尸不吃地板"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [esi+24],10
+je PlantsVsZombies.exe+12E7B0
+originalcode:
+cmp edx,[esi+1c]
+jne PlantsVsZombies.exe+12E7B0
+lea eax,[esp+10]
+
+exit:
+jmp returnhere
+
+"PlantsVsZombies.exe"+12E7D0:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"PlantsVsZombies.exe"+12E7D0:
+jne PlantsVsZombies.exe+12E7B0
+lea eax,[esp+10]
+//Alt: db 75 DE 8D 44 24 10
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"地板移动"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+alloc(move,4)
+alloc(time,4)
+alloc(times,64)
+alloc(stop,64)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(while)
+label(next)
+label(down)
+label(m)
+label(nostop)
+label(dir1)
+label(dir2)
+label(dir3)
+newmem:
+add [time],1
+cmp [time],3
+jle m
+mov [time],0
+cmp [stop],0
+sub [stop],1
+jg originalcode
+add [times],1
+cmp [times],1ea
+jle nostop
+mov [times],0
+cmp [move],0
+je dir1
+mov [move],0
+jmp dir2
+dir1:
+mov [move],1
+dir2:
+mov [stop],150
+jmp originalcode
+nostop:
+push ecx
+push ebx
+push esi
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+mov ebx,ecx
+mov ecx,[ecx+ac]
+mov ebx,[ebx+b0]
+while:
+cmp [ecx+24],10
+jne next
+cmp [ecx+c8],2
+jle next
+cmp [ecx+c8],4
+je down
+cmp [move],0
+jne dir3
+add [ecx+8],1
+jmp next
+dir3:
+sub [ecx+8],1
+jmp next
+down:
+cmp [move],0
+je dir3
+add [ecx+8],1
+next:
+add ecx,14c
+sub ebx,1
+cmp ebx,0
+jg while
+pop esi
+pop ebx
+pop ecx
+jmp originalcode
+m:
+originalcode:
+mov edi,00000001
+
+exit:
+jmp returnhere
+
+"PlantsVsZombies.exe"+15B24:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+dealloc(move)
+dealloc(times)
+dealloc(time)
+dealloc(stop)
+"PlantsVsZombies.exe"+15B24:
+mov edi,00000001
+//Alt: db BF 01 00 00 00
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"绑定"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(while)
+label(next)
+label(t)
+label(tt)
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [eax+24],10
+je t
+push eax
+push ecx
+push ebx
+mov ebx,eax
+mov eax,[eax+8]
+cdq
+mov ecx,50
+div ecx
+mov [ebx+28],eax
+pop ebx
+pop ecx
+pop eax
+push eax
+push ecx
+push ebx
+mov ebx,eax
+mov eax,[eax+c]
+cdq
+mov ecx,64
+div ecx
+mov [ebx+1c],eax
+pop ebx
+pop ecx
+pop eax
+t:
+cmp [eax+24],21
+je tt
+cmp [eax+24],10
+jne originalcode
+cmp [eax+c8],1
+jle originalcode
+tt:
+push ecx
+push ebx
+push esi
+mov ecx,[6a9ec0]
+mov ecx,[ecx+768]
+mov ebx,ecx
+mov ecx,[ecx+ac]
+mov ebx,[ebx+b0]
+while:
+cmp [ecx+24],10
+je next
+mov esi,[eax+8]
+sub esi,20
+cmp esi,[ecx+8]
+jg next
+add esi,40
+cmp esi,[ecx+8]
+jl next
+mov esi,[eax+c]
+sub esi,30
+cmp esi,[ecx+c]
+jg next
+add esi,60
+cmp esi,[ecx+c]
+jl next
+cmp [eax+24],21
+je ttt
+mov esi,[eax+8]
+mov [ecx+8],esi
+jmp next
+ttt:
+cmp [ecx+24],21
+je next
+sub esi,30
+mov [ecx+c],esi
+sub [ecx+c],A
+mov esi,[eax+8]
+mov [ecx+8],esi
+mov esi,[eax+20]
+add esi,1
+mov [ecx+20],esi
+next:
+add ecx,14c
+sub ebx,1
+cmp ebx,0
+jg while
+pop esi
+pop ebx
+pop ecx
+jmp originalcode
+originalcode:
+fild dword ptr [eax+08]
+mov esi,[ebp+0C]
+
+exit:
+jmp returnhere
+
+"PlantsVsZombies.exe"+16FBF:
+jmp newmem
+nop
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"PlantsVsZombies.exe"+16FBF:
+fild dword ptr [eax+08]
+mov esi,[ebp+0C]
+//Alt: db DB 40 08 8B 75 0C
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

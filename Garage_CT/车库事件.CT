@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>143</ID>
+      <Description>"波数效果"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+cmp [edx+557C],#10 //波数
+je wave10_16
+cmp [edx+557C],#16
+je wave10_16
+jmp next
+
+wave10_16:
+pushad
+mov ebp,edx
+push #2 //所在行
+push #22 //僵尸ID
+mov eax,ebp
+call 40DDC0
+push #3 //所在行
+push #22 //僵尸ID
+mov eax,ebp
+call 40DDC0
+push #4 //所在行
+push #22 //僵尸ID
+mov eax,ebp
+call 40DDC0
+mov esi,zfc1
+mov ecx,#39
+call zimu
+popad
+jmp originalcode
+
+next:
+cmp [edx+557C],#13 //波数
+je wave13_20
+cmp [edx+557C],#20
+je wave13_20
+jne originalcode
+
+wave13_20:
+pushad
+mov ebp,edx
+push #1 //所在行
+push #12 //僵尸ID
+mov eax,ebp
+call 40DDC0
+push #2 //所在行
+push #12 //僵尸ID
+mov eax,ebp
+call 40DDC0
+push #3 //所在行
+push #12 //僵尸ID
+mov eax,ebp
+call 40DDC0
+push #4 //所在行
+push #12 //僵尸ID
+mov eax,ebp
+call 40DDC0
+mov esi,zfc2
+mov ecx,#44
+call zimu
+popad
+
+originalcode:
+mov eax,[edx+557C]
+jmp returnhere+1
+
+zfc1: //The enemy is being reinforced with EVs
+db 54 68 65 20 65 6E 65 6D 79 20 69 73 20 62 65 69 6E 67 20 72 65 69 6E 66 6F 72 63 65 64 20 77 69 74 68 20 45 56 73 00
+zfc2: //The enemy is being reinforced with gas cars
+db 54 68 65 20 65 6E 65 6D 79 20 69 73 20 62 65 69 6E 67 20 72 65 69 6E 66 6F 72 63 65 64 20 77 69 74 68 20 67 61 73 20 63 61 72 73 00
+
+zimu:
+sub esp,100
+lea edi,[esp]
+repe movsb
+push esp //文本空地址
+lea ecx,[esp+50]
+call 404450
+mov esi,[ebp+140]
+mov ecx,#4 //字幕样式
+lea edx,[esp+4C]
+call 459010
+mov [esi+88],#1000 //字幕显示时间
+add esp,100
+ret
+
+4268E3:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+4268E3:
+mov eax,[edx+557C]
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

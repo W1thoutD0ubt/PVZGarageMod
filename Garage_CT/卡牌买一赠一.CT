@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1543</ID>
+      <Description>"卡牌买一赠一"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//eax 植物指针
+mov ebx,[eax+4]
+mov ecx,[ebx+138]
+cmp [ecx+24],#-1
+je originalcode
+mov ecx,[eax+24] //植物ID
+cmp ecx,#16
+je next
+cmp ecx,#33
+jne originalcode
+next:
+push eax
+push ecx
+push #3 //物品状态
+push #16 //物品类型
+push [eax+C] //Y
+push [eax+8] //X
+mov ecx,ebx
+call 40CB10
+pop [eax+68] //卡牌ID
+pop eax
+originalcode:
+pop ebx
+pop ecx
+ret 10
+
+40D19B:
+jmp newmem
+
+[DISABLE]
+dealloc(newmem)
+40D19B:
+pop ebx
+pop ecx
+ret 10
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

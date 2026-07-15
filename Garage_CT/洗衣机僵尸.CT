@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"爆炸效果"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//ebx 僵尸指针
+cmp [ebx+24],#15 //僵尸ID
+jne originalcode
+pushad
+mov esi,ebx
+call bzxg //爆炸效果
+push #5 //特效ID
+push 61A80 //图层
+push (float)80
+fld [ebx+30] //fl_Y
+fadd [esp]
+fstp [esp]
+push (float)50
+fld [ebx+2C] //fl_X
+fadd [esp]
+fstp [esp]
+mov esi,[ebx]
+mov esi,[esi+820]
+mov esi,[esi]
+call 518A70
+push #101 //音效ID
+mov ecx,[ebx]
+call 4560C0
+popad
+originalcode:
+call 5331C0
+jmp returnhere
+
+bzxg: //爆炸效果
+push ebx
+mov eax,[esi+1C] //所在行
+test eax,eax
+je bzxgnext1
+cmp eax,#1
+je bzxgnext1
+cmp eax,#4
+je bzxgnext2
+mov eax,#3 //随机变小
+call 5AF400
+lea ebx,[eax*8+sjpy1]
+jmp bzxgnext
+bzxgnext1:
+mov ebx,sjpy1
+jmp bzxgnext
+bzxgnext2:
+mov ebx,sjpy2
+bzxgnext:
+call cjxg
+mov ecx,[ebx]
+add [eax+1C],ecx //所在行
+call cjxg
+mov ecx,[ebx+4]
+add [eax+1C],ecx //所在行
+pop ebx
+ret
+sjpy1:
+dd #0 #1
+sjpy2:
+dd #-1 #0
+sjpy3:
+dd #-1 #1
+
+cjxg: //创建小鬼
+push [esi+1C] //所在行
+push #24 //僵尸ID
+mov eax,[esi+4]
+call 40DDC0
+fld [esi+2C] //fl_X
+fstp [eax+2C] //fl_X
+mov [eax+28],#100 //僵尸状态
+//mov [eax+84],(float)0 //Y偏移
+ret
+
+529AD5:
+jmp newmem
+returnhere:
+
+526C61:
+call bzxg //爆炸效果
+jmp 526C84
+
+[DISABLE]
+dealloc(newmem)
+529AD5:
+call 5331C0
+
+526C61:
+mov eax,[esi+1C]
+mov ecx,[esi+4]
+push FF
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3595</ID>
+      <Description>"僵尸常访问地址"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//esi 僵尸指针
+cmp [esi+24],#24 //僵尸ID
+jne originalcode
+cmp [esi+28],#100 //僵尸状态
+jne originalcode
+pushad
+mov ebx,[esi+4]
+mov eax,[ebx+94] //最多时僵尸数
+mov ebx,[ebx+90] //目标僵尸指针
+mov edx,[esi]
+mov edx,[edx+820]
+mov edx,[edx+8]
+mov ecx,[esi+118]
+and ecx,FFFF
+lea ecx,[ecx+ecx*4]
+shl ecx,5
+add ecx,[edx]
+mov ebx,ecx
+mov [ebx+18],#82 //起始帧
+mov [ebx+1C],#16 //关键帧数量
+mov [ebx+8],(float)10 //动画速度
+fld [esi+2C] //fl_X
+fadd [float1] //小鬼X速度
+fstp [esi+2C] //fl_X
+cmp [ebx+5C],#1
+jl end
+mov [ebx+18],#0 //起始帧
+mov [ebx+1C],#33 //关键帧数量
+mov [esi+28],#72 //僵尸状态
+end:
+popad
+originalcode:
+mov eax,[esi+58]
+add [esi+54],-1
+jmp returnhere+2
+float1: //小鬼X速度
+dd (float)-1
+
+52AF8B:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+52AF8B:
+mov eax,[esi+58]
+add [esi+54],-1
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1545</ID>
+      <Description>"空中不吃"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//esi 植物指针
+//ebp 僵尸指针
+//52E58E 无视
+cmp [ebp+24],#24 //僵尸ID
+jne originalcode
+cmp [ebp+28],#100 //僵尸状态
+je 52E58E
+originalcode:
+cmp edx,15
+je 52E58E
+jmp returnhere
+
+52E584:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+52E584:
+cmp edx,15
+je 52E58E
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1537</ID>
+      <Description>"空中判定"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+//esi 僵尸指针
+//531AB6 停止
+cmp [esi+24],#24 //僵尸ID
+jne originalcode
+cmp [esi+28],#100 //僵尸状态
+je 531AB6
+originalcode:
+cmp byte [esi+B8],0
+jmp returnhere+2
+
+531AC0:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+531AC0:
+cmp byte [esi+B8],0
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"灰烬判定"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+cmp eax,#15 //僵尸ID
+je 532FDB
+cmp eax,1E
+jne 532BD2
+jmp returnhere
+
+532BB2:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+532BB2:
+cmp eax,1E
+jne 532BD2
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

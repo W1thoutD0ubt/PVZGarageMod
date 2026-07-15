@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4365</ID>
+      <Description>"开局小推车"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,2048)
+
+newmem:
+pushad
+mov ebp,esi
+mov ebp,[ebp+768]
+mov ecx,[ebp+8C]
+lea ebx,[ebp+5D8]
+lea esi,[ebp+100]
+call 41E120
+mov esi,eax
+push eax
+mov eax,#2 //所在行
+call 458000
+mov [esi+8],(float)690 //fl_X
+
+mov ecx,[ebp+8C]
+lea ebx,[ebp+5D8]
+lea esi,[ebp+100]
+call 41E120
+mov esi,eax
+push eax
+mov eax,#3 //所在行
+call 458000
+mov [esi+8],(float)600 //fl_X
+
+mov ecx,[ebp+8C]
+lea ebx,[ebp+5D8]
+lea esi,[ebp+100]
+call 41E120
+mov esi,eax
+push eax
+mov eax,#4 //所在行
+call 458000
+mov [esi+8],(float)690 //fl_X
+
+popad
+originalcode:
+mov [esi+7FC],3
+jmp returnhere+5
+
+44F6F0:
+jmp newmem
+returnhere:
+
+43A6A6:
+jmp 43A6D4
+
+[DISABLE]
+dealloc(newmem)
+44F6F0:
+mov [esi+7FC],3
+
+43A6A6:
+jl 43A6C5
+cmp eax,F
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
